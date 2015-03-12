@@ -56,7 +56,7 @@ $ chmod -R 777 app/cache
 $ chmod -R 777 app/logs
 ```
 
-Commande FOSUserBundler
+Commande FOSUserBundle
 ```sh
 #Création de compte basique
 $ php app/console fos:user:create testuser test@example.com p@ssword 
@@ -77,7 +77,7 @@ $ php app/console fos:user:change-password testuser newp@ssword
 ```
 
 ### Version
-1.0
+1.1
 
 
 **We Can do IT !**
