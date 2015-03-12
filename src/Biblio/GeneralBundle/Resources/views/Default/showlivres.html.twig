@@ -11,6 +11,8 @@
 			<th>Année</th>
 			<th>Type de livre</th>
 			<th>Résumé</th>
+			<th>Modifier</th>
+			<th>Supprimer</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -29,6 +31,8 @@
 					<td>{{ livre.annee }}</td>
 					<td>{{ livre.typeLivre.libelle }}</td>
 					<td>{{ livre.resume | slice(0, 50) }}</td>
+					<th><a href="{{ path('biblio_general_editlivre',{ 'id':livre.id }) }}}">Editer</a></th>
+					<th><a href="{{ path('biblio_general_deletelivre',{ 'id':livre.id }) }}}">Supprimer</a></th>
 				</tr>
 			{% endfor %}
 		{% endif %}
