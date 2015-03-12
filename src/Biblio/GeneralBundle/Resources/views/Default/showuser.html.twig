@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+{% block title %}{{member.prenom}}{% endblock %}
+{% block body %}
+
+<p>Bonjour, je m'appelle {{member.prenom}} {{member.nom}}, j'habite à {{member.ville}} et j'ai {{"now"|date('Y') - member.naissance|date('Y')}} ans ! Je suis passionné de lecture.</p>
+
+<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th>##</th>
+			<th>Exemplaire</th>
+			<th>Date d'emprunt</th>
+			<th>Délais d'emprunt</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% if member.emprunts is not empty %}
+			{% for emprunt in member.emprunts %}
+				<tr>
+					<th>{{ emprunt.id }}</th>
+					<td>{{ emprunt.exemplaire.livre.titre }} ({{ emprunt.exemplaire.edition.nom }})</td>
+					<td>{{ emprunt.date|date("d/m/Y") }}</td>
+					<td>{{ emprunt.delais }}</td>
+				</tr>
+			{% endfor %}
+		{% endif %}
+	</tbody>
+</table>
+
+{% endblock %}

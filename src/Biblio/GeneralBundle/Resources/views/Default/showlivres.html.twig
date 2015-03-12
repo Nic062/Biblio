@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+{% block title %}Liste des Livres{% endblock %}
+{% block body %}
+
+<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th>##</th>
+			<th>Titre</th>
+			<th>Auteur(s)</th>
+			<th>Année</th>
+			<th>Type de livre</th>
+			<th>Résumé</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% if listLivres is not empty %}
+			{% for livre in listLivres %}
+				<tr>
+					<th><a href="{{ path('biblio_general_showlivre',{ 'id':livre.id }) }}}">{{ livre.id }}</a></th>
+					<td>{{ livre.titre }}</td>
+					<td>
+{% if livre.auteurs is not empty %}
+    {% for auteur in livre.auteurs %}
+      {{ auteur.prenom }} {{ auteur.nom }}{% if not loop.last %}, {% endif %}
+    {% endfor %}
+{% endif %}
+					</td>
+					<td>{{ livre.annee }}</td>
+					<td>{{ livre.typeLivre.libelle }}</td>
+					<td>{{ livre.resume | slice(0, 50) }}</td>
+				</tr>
+			{% endfor %}
+		{% endif %}
+	</tbody>
+</table>
+
+{% endblock %}

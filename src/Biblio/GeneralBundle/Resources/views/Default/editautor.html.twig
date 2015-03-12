@@ -1,0 +1,37 @@
+{% extends '::base.html.twig' %}
+{% block title %}Ajouter un auteur{% endblock %}
+{% block body %}
+
+<h3>Nouvel auteur : </h3>
+
+<div class="well">
+	{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_errors(form) }}
+
+    <div class="form-group">
+      {{ form_label(form.prenom, "Prénom", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+      <div class="col-sm-4">
+        {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+	
+    <div class="form-group">
+      {{ form_label(form.nom, "Nom", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+      <div class="col-sm-4">
+        {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+	
+	<div class="form-group">
+      {{ form_label(form.naissance, "Naissance", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+      <div class="col-sm-4">
+        {{ form_widget(form.naissance, {'attr': {'class': 'form-control'}}) }}
+      </div>
+    </div>
+	
+  {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+  {{ form_rest(form) }}
+  {{ form_end(form) }}
+</div>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends '::base.html.twig' %}
+{% block title %}Liste des auteurs{% endblock %}
+{% block body %}
+
+<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th>##</th>
+			<th>Nom</th>
+			<th>Prénom</th>
+			<th>Date de naissance</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% if listAutors is not empty %}
+			{% for autor in listAutors %}
+				<tr>
+					<th><a href="{{ path('biblio_general_showautor',{ 'id':autor.id }) }}}">{{ autor.id }}</a></th>
+					<td>{{ autor.nom }}</td>
+					<td>{{ autor.prenom }}</td>
+					<td>{{ autor.naissance|date("d/m/Y") }}</td>
+				</tr>
+			{% endfor %}
+		{% endif %}
+	</tbody>
+</table>
+
+{% endblock %}

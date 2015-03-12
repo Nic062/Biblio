@@ -1,0 +1,53 @@
+<nav class="navbar navbar-default navbar-static-top navbar-inverse">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Bibliotèque</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="{{ path('biblio_general_homepage') }}"><i class="fa fa-home"></i>  Accueil</a></li>
+      </ul>
+	  <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Afficher... <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="{{ path('biblio_general_showusers') }}">Liste des membres</a></li>
+			<li><a href="{{ path('biblio_general_showautors') }}">Liste des auteurs</a></li>
+			<li><a href="{{ path('biblio_general_showtypeslivre') }}">Liste des types de livre</a></li>
+			<li><a href="{{ path('biblio_general_showlivres') }}">Liste des livres</a></li>
+			<li><a href="{{ path('biblio_general_showeditions') }}">Liste des éditeurs</a></li>
+			<li><a href="{{ path('biblio_general_showemprunts') }}">Liste des emprunts</a></li>
+          </ul>
+        </li>
+      </ul>
+	  <ul class="nav navbar-nav">
+        <li><a href="#"></i>Rechercher un livre</a></li>
+      </ul>
+	  <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Nouveau... <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="{{ path('biblio_general_addlivre') }}">Livre</a></li>
+            <li><a href="{{ path('biblio_general_addexemplaire') }}">Exemplaire</a></li>
+			<li><a href="{{ path('biblio_general_addautor') }}">Auteur</a></li>
+            <li><a href="#">Editeur</a></li>
+            <li class="divider"></li>
+            <li><a href="{{ path('biblio_general_adduser') }}">Client</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Mon compte</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

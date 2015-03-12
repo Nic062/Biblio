@@ -1,0 +1,70 @@
+biblio_general_homepage:
+    path:     /
+    defaults: { _controller: BiblioGeneralBundle:Default:index }
+
+biblio_general_adduser:
+    path:     /adduser
+    defaults: { _controller: BiblioGeneralBundle:Default:adduser }
+biblio_general_edituser:
+    path:     /edituser/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:edituser }
+biblio_general_deleteuser:
+    path:     /deleteuser/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:deleteuser }
+biblio_general_showusers:
+    path:     /showusers
+    defaults: { _controller: BiblioGeneralBundle:Default:showusers }
+biblio_general_showuser:
+    path:     /showuser/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:showuser }
+
+biblio_general_addautor:
+    path:     /addautor
+    defaults: { _controller: BiblioGeneralBundle:Default:addautor }
+biblio_general_editautor:
+    path:     /editautor/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:editautor }
+biblio_general_showautors:
+    path:     /showautors
+    defaults: { _controller: BiblioGeneralBundle:Default:showautors }
+biblio_general_showautor:
+    path:     /showautor/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:showautor }
+
+biblio_general_showtypeslivre:
+    path:     /showtypeslivre
+    defaults: { _controller: BiblioGeneralBundle:Default:showtypeslivre }
+biblio_general_showtypelivre:
+    path:     /showtypelivre/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:showtypelivre }
+
+biblio_general_addlivre:
+    path:     /addlivre
+    defaults: { _controller: BiblioGeneralBundle:Default:addlivre }
+biblio_general_showlivres:
+    path:     /showlivres
+    defaults: { _controller: BiblioGeneralBundle:Default:showlivres }
+biblio_general_showlivre:
+    path:     /showlivre/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:showlivre }
+
+biblio_general_addexemplaire:
+    path:     /addexemplaire
+    defaults: { _controller: BiblioGeneralBundle:Default:addexemplaire }
+
+biblio_general_addedition:
+    path:     /addedition
+    defaults: { _controller: BiblioGeneralBundle:Default:addedition }
+biblio_general_showeditions:
+    path:     /showeditions
+    defaults: { _controller: BiblioGeneralBundle:Default:showeditions }
+biblio_general_showedition:
+    path:     /showedition/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:showedition }
+
+biblio_general_addemprunt:
+    path:     /addemprunt
+    defaults: { _controller: BiblioGeneralBundle:Default:addemprunt }
+biblio_general_showemprunts:
+    path:     /showemprunts
+    defaults: { _controller: BiblioGeneralBundle:Default:showemprunts }

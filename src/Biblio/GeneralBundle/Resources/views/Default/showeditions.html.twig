@@ -1,0 +1,24 @@
+{% extends '::base.html.twig' %}
+{% block title %}Liste des editeurs{% endblock %}
+{% block body %}
+
+<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th>##</th>
+			<th>Nom</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% if editions is not empty %}
+			{% for edition in editions %}
+				<tr>
+					<th><a href="{{ path('biblio_general_showedition',{ 'id':edition.id }) }}}">{{ edition.id }}</a></th>
+					<td>{{ edition.nom }}</td>
+				</tr>
+			{% endfor %}
+		{% endif %}
+	</tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends '::base.html.twig' %}
+{% block title %}Liste des auteurs{% endblock %}
+{% block body %}
+
+<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th>##</th>
+			<th>Libellé</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% if listTypesLivre is not empty %}
+			{% for typeLivre in listTypesLivre %}
+				<tr>
+					<th><a href="{{ path('biblio_general_showtypelivre',{ 'id':typeLivre.id }) }}}">{{ typeLivre.id }}</a></th>
+					<td>{{ typeLivre.libelle }}</td>
+				</tr>
+			{% endfor %}
+		{% endif %}
+	</tbody>
+</table>
+
+{% endblock %}
