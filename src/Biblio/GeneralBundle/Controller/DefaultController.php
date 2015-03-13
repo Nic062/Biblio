@@ -196,6 +196,22 @@ class DefaultController extends Controller
 		
 	}
 	
+	public function deleteautorAction($id)
+    {
+		
+		$em = $this->getDoctrine()->getManager();
+		$autor = $em->getRepository('BiblioGeneralBundle:Auteur')->find($id);
+		
+		if (null === $autor) {
+		  throw new NotFoundHttpException("L'auteur d'id ".$id." n'existe pas.");
+		}
+		
+		$em->remove($autor);
+		$em->flush();
+		
+		return $this->redirect($this->generateUrl('biblio_general_showautors'));
+    }
+	
 	public function showautorsAction()
     {
 		
@@ -248,23 +264,100 @@ class DefaultController extends Controller
 		));
     }
 	
-	public function addlivreAction(){
+	public function addlivreAction(Request $request){
 	
-		$em = $this->getDoctrine()->getManager();
-		
 		$livre = new Livre();
-		$livre->setTitre('Germinal');
-		$livre->setAnnee(1885);
-		$livre->setResume("Germinal est un roman d'Émile Zola publié en 1885. Il s'agit du treizième roman de la série des Rougon-Macquart. Écrit d'avril 1884 à janvier 1885, le roman paraît d'abord en feuilleton entre novembre 1884 et février 1885 dans le Gil Blas.");
-		$livre->setTypeLivre($em->getRepository('BiblioGeneralBundle:TypeLivre')->findOneByLibelle("Romans & Fictions"));
-		$livre->addAuteur($em->getRepository('BiblioGeneralBundle:Auteur')->findOneByNom("Zola"));
+
+		$form = $this->get('form.factory')->createBuilder('form', $livre)
+			->add('titre',     'text')
+			->add('auteurs', 'entity', array(
+			  'class'    => 'BiblioGeneralBundle:Auteur',
+			  'property' => 'nom',
+			  'multiple' => true
+			))
+			->add('annee',   'integer')
+			->add('resume',      'text')
+			->add('typelivre', 'entity', array(
+			  'class'    => 'BiblioGeneralBundle:TypeLivre',
+			  'property' => 'libelle'
+			))
+			->add('save',      'submit')
+			->getForm();
 		
-		$em->persist($livre);
-		$em->flush();
+		$form->handleRequest($request);
+
+		if ($form->isValid()) {
 		
-		return $this->redirect($this->generateUrl('biblio_general_showlivre', array('id' => $livre->getId())));
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($livre);
+			$em->flush();
+
+			$request->getSession()->getFlashBag()->add('notice', 'Livre bien enregistré.');
+
+			return $this->redirect($this->generateUrl('biblio_general_showlivre', array('id' => $livre->getId())));
+		}
+
+		return $this->render('BiblioGeneralBundle:Default:addlivre.html.twig', array(
+			'form' => $form->createView(),
+		));
 		
 	}
+	
+	public function editlivreAction($id, Request $request){
+	
+		$em = $this->getDoctrine()->getManager();
+		$livre = $em->getRepository('BiblioGeneralBundle:Livre')->find($id);
+
+		$form = $this->get('form.factory')->createBuilder('form', $livre)
+			->add('titre',     'text')
+			->add('auteurs', 'entity', array(
+			  'class'    => 'BiblioGeneralBundle:Auteur',
+			  'property' => 'nom',
+			  'multiple' => true
+			))
+			->add('annee',   'integer')
+			->add('resume',      'text')
+			->add('typelivre', 'entity', array(
+			  'class'    => 'BiblioGeneralBundle:TypeLivre',
+			  'property' => 'libelle'
+			))
+			->add('save',      'submit')
+			->getForm();
+		
+		$form->handleRequest($request);
+
+		if ($form->isValid()) {
+		
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($livre);
+			$em->flush();
+
+			$request->getSession()->getFlashBag()->add('notice', 'Livre bien enregistré.');
+
+			return $this->redirect($this->generateUrl('biblio_general_showlivre', array('id' => $livre->getId())));
+		}
+
+		return $this->render('BiblioGeneralBundle:Default:addlivre.html.twig', array(
+			'form' => $form->createView(),
+		));
+		
+	}
+	
+	public function deletelivreAction($id)
+    {
+		
+		$em = $this->getDoctrine()->getManager();
+		$livre = $em->getRepository('BiblioGeneralBundle:Livre')->find($id);
+		
+		if (null === $livre) {
+		  throw new NotFoundHttpException("Le livre d'id ".$id." n'existe pas.");
+		}
+		
+		$em->remove($livre);
+		$em->flush();
+		
+		return $this->redirect($this->generateUrl('biblio_general_showlivres'));
+    }
 	
 	public function showlivresAction()
     {

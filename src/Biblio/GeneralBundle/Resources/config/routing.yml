@@ -24,6 +24,9 @@ biblio_general_addautor:
 biblio_general_editautor:
     path:     /editautor/{id}
     defaults: { _controller: BiblioGeneralBundle:Default:editautor }
+biblio_general_deleteautor:
+    path:     /deleteautor/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:deleteautor }
 biblio_general_showautors:
     path:     /showautors
     defaults: { _controller: BiblioGeneralBundle:Default:showautors }
@@ -38,9 +41,16 @@ biblio_general_showtypelivre:
     path:     /showtypelivre/{id}
     defaults: { _controller: BiblioGeneralBundle:Default:showtypelivre }
 
+
 biblio_general_addlivre:
     path:     /addlivre
     defaults: { _controller: BiblioGeneralBundle:Default:addlivre }
+biblio_general_editlivre:
+    path:     /editlivre/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:editlivre }
+biblio_general_deletelivre:
+    path:     /deletelivre/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:deletelivre }
 biblio_general_showlivres:
     path:     /showlivres
     defaults: { _controller: BiblioGeneralBundle:Default:showlivres }
