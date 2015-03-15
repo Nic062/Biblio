@@ -61,10 +61,22 @@ biblio_general_showlivre:
 biblio_general_addexemplaire:
     path:     /addexemplaire
     defaults: { _controller: BiblioGeneralBundle:Default:addexemplaire }
+biblio_general_editexemplaire:
+    path:     /editexemplaire/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:editexemplaire }
+biblio_general_deleteexemplaire:
+    path:     /deleteexemplaire/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:deleteexemplaire }
 
 biblio_general_addedition:
     path:     /addedition
     defaults: { _controller: BiblioGeneralBundle:Default:addedition }
+biblio_general_editedition:
+    path:     /editedition/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:editedition }
+biblio_general_deleteedition:
+    path:     /deleteedition/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:deleteedition }
 biblio_general_showeditions:
     path:     /showeditions
     defaults: { _controller: BiblioGeneralBundle:Default:showeditions }
@@ -73,8 +85,14 @@ biblio_general_showedition:
     defaults: { _controller: BiblioGeneralBundle:Default:showedition }
 
 biblio_general_addemprunt:
-    path:     /addemprunt
+    path:     /addemprunt/{idUser}/{idExemplaire}
     defaults: { _controller: BiblioGeneralBundle:Default:addemprunt }
+biblio_general_editemprunt:
+    path:     /editemprunt/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:editemprunt }
+biblio_general_deleteemprunt:
+    path:     /deleteemprunt/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:deleteemprunt }
 biblio_general_showemprunts:
     path:     /showemprunts
     defaults: { _controller: BiblioGeneralBundle:Default:showemprunts }

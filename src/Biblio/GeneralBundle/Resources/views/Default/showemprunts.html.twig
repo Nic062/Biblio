@@ -10,6 +10,8 @@
 			<th>Exemplaire</th>
 			<th>Date d'emprunt</th>
 			<th>Délais d'emprunt</th>
+			<th>Modifier</th>
+			<th>Supprimer</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -21,6 +23,8 @@
 					<td>{{ emprunt.exemplaire.livre.titre }} ({{ emprunt.exemplaire.edition.nom }})</td>
 					<td>{{ emprunt.date|date("d/m/Y") }}</td>
 					<td>{{ emprunt.delais }}</td>
+					<th><a href="{{ path('biblio_general_editemprunt',{ 'id':emprunt.id }) }}}">Editer</a></th>
+					<th><a href="{{ path('biblio_general_deleteemprunt',{ 'id':emprunt.id }) }}}">Supprimer</a></th>
 				</tr>
 			{% endfor %}
 		{% endif %}

@@ -20,6 +20,8 @@
 			<th>##</th>
 			<th>Nom de l'édition</th>
 			<th>Disponibilité</th>
+			<th>Modifier</th>
+			<th>Supprimer</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -28,7 +30,9 @@
 				<tr>
 					<th>{{ ex.id }}</th>
 					<td>{{ ex.edition.nom }}</td>
-					<td>Dispo!</td>
+					<th><a href="{{ path('biblio_general_addemprunt',{ 'idUser':128, 'idExemplaire':ex.id }) }}}">Emprunter!</a></th>
+					<th><a href="{{ path('biblio_general_editexemplaire',{ 'id':ex.id }) }}}">Editer</a></th>
+					<th><a href="{{ path('biblio_general_deleteexemplaire',{ 'id':ex.id }) }}}">Supprimer</a></th>
 				</tr>
 			{% endfor %}
 		{% endif %}

@@ -7,6 +7,8 @@
 		<tr>
 			<th>##</th>
 			<th>Nom</th>
+			<th>Modifier</th>
+			<th>Supprimer</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -15,6 +17,8 @@
 				<tr>
 					<th><a href="{{ path('biblio_general_showedition',{ 'id':edition.id }) }}}">{{ edition.id }}</a></th>
 					<td>{{ edition.nom }}</td>
+					<th><a href="{{ path('biblio_general_editedition',{ 'id':edition.id }) }}}">Editer</a></th>
+					<th><a href="{{ path('biblio_general_deleteedition',{ 'id':edition.id }) }}}">Supprimer</a></th>
 				</tr>
 			{% endfor %}
 		{% endif %}

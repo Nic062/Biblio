@@ -10,6 +10,7 @@ use Biblio\GeneralBundle\Entity\Exemplaire;
 use Biblio\GeneralBundle\Entity\Emprunt;
 use Biblio\GeneralBundle\Entity\Auteur;
 use Biblio\GeneralBundle\Entity\Inscrit;
+use Biblio\GeneralBundle\Entity\Edition;
 
 class DefaultController extends Controller
 {
@@ -18,6 +19,9 @@ class DefaultController extends Controller
 
         return $this->render('BiblioGeneralBundle:Default:index.html.twig');
     }
+	
+	
+	
 	
 	public function adduserAction(Request $request){
 	
@@ -134,6 +138,9 @@ class DefaultController extends Controller
 		));
     }
 	
+	
+	
+	
 	public function addautorAction(Request $request){
 	
 		$auteur = new Auteur();
@@ -238,6 +245,9 @@ class DefaultController extends Controller
 		));
     }
 	
+	
+	
+	
 	public function showtypeslivreAction()
     {
 		
@@ -263,6 +273,9 @@ class DefaultController extends Controller
 			'typeLivre'           => $typeLivre
 		));
     }
+	
+	
+	
 	
 	public function addlivreAction(Request $request){
 	
@@ -337,7 +350,7 @@ class DefaultController extends Controller
 			return $this->redirect($this->generateUrl('biblio_general_showlivre', array('id' => $livre->getId())));
 		}
 
-		return $this->render('BiblioGeneralBundle:Default:addlivre.html.twig', array(
+		return $this->render('BiblioGeneralBundle:Default:editlivre.html.twig', array(
 			'form' => $form->createView(),
 		));
 		
@@ -385,35 +398,172 @@ class DefaultController extends Controller
 		));
     }
 	
-	public function addexemplaireAction(){
 	
-		$em = $this->getDoctrine()->getManager();
+	
+	
+	public function addexemplaireAction(Request $request){
+	
+		$exemplaire = new Exemplaire();
+
+		$form = $this->get('form.factory')->createBuilder('form', $exemplaire)
+			->add('edition', 'entity', array(
+			  'class'    => 'BiblioGeneralBundle:Edition',
+			  'property' => 'nom'
+			))
+			->add('livre', 'entity', array(
+			  'class'    => 'BiblioGeneralBundle:Livre',
+			  'property' => 'titre'
+			))
+			->add('save',      'submit')
+			->getForm();
 		
-		$ex = new Exemplaire();
-		$ex->setEdition($em->getRepository('BiblioGeneralBundle:Edition')->findOneByNom("Hachette"));
-		$livre=$em->getRepository('BiblioGeneralBundle:Livre')->findOneByTitre("Germinal");
-		$ex->setLivre($livre);
+		$form->handleRequest($request);
+
+		if ($form->isValid()) {
 		
-		$em->persist($ex);
-		$em->flush();
-		
-		return $this->redirect($this->generateUrl('biblio_general_showlivre', array('id' => $livre->getId())));
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($exemplaire);
+			$em->flush();
+
+			$request->getSession()->getFlashBag()->add('notice', 'Exemplaire bien enregistré.');
+
+			return $this->redirect($this->generateUrl('biblio_general_showlivre', array('id' => $exemplaire->getLivre()->getId())));
+		}
+
+		return $this->render('BiblioGeneralBundle:Default:addedition.html.twig', array(
+			'form' => $form->createView(),
+		));
 		
 	}
 	
-	public function addeditionAction(){
+	public function editexemplaireAction($id, Request $request){
 	
 		$em = $this->getDoctrine()->getManager();
+		$exemplaire = $em->getRepository('BiblioGeneralBundle:Exemplaire')->find($id);
+
+		$form = $this->get('form.factory')->createBuilder('form', $exemplaire)
+			->add('edition', 'entity', array(
+			  'class'    => 'BiblioGeneralBundle:Edition',
+			  'property' => 'nom'
+			))
+			->add('livre', 'entity', array(
+			  'class'    => 'BiblioGeneralBundle:Livre',
+			  'property' => 'titre'
+			))
+			->add('save',      'submit')
+			->getForm();
 		
+		$form->handleRequest($request);
+
+		if ($form->isValid()) {
+		
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($exemplaire);
+			$em->flush();
+
+			$request->getSession()->getFlashBag()->add('notice', 'Exemplaire bien enregistré.');
+
+			return $this->redirect($this->generateUrl('biblio_general_showlivre', array('id' => $exemplaire->getLivre()->getId())));
+		}
+
+		return $this->render('BiblioGeneralBundle:Default:addedition.html.twig', array(
+			'form' => $form->createView(),
+		));
+		
+	}
+	
+	public function deleteexemplaireAction($id)
+    {
+		
+		$em = $this->getDoctrine()->getManager();
+		$exemplaire = $em->getRepository('BiblioGeneralBundle:Exemplaire')->find($id);
+		$idLivre=$exemplaire->getLivre()->getId();
+		
+		if (null === $exemplaire) {
+		  throw new NotFoundHttpException("L'exemplaire d'id ".$id." n'existe pas.");
+		}
+		
+		$em->remove($exemplaire);
+		$em->flush();
+		
+		return $this->redirect($this->generateUrl('biblio_general_showlivre', array('id' => $idLivre)));
+    }
+	
+	
+	
+	
+	public function addeditionAction(Request $request){
+	
 		$edition = new Edition();
-		$edition->setNom('lol');
+
+		$form = $this->get('form.factory')->createBuilder('form', $edition)
+			->add('Nom',     'text')
+			->add('save',      'submit')
+			->getForm();
 		
-		$em->persist($edition);
-		$em->flush();
+		$form->handleRequest($request);
+
+		if ($form->isValid()) {
 		
-		return $this->redirect($this->generateUrl('biblio_general_showedition', array('id' => $edition->getId())));
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($edition);
+			$em->flush();
+
+			$request->getSession()->getFlashBag()->add('notice', 'Edition bien enregistré.');
+
+			return $this->redirect($this->generateUrl('biblio_general_showedition', array('id' => $edition->getId())));
+		}
+
+		return $this->render('BiblioGeneralBundle:Default:addedition.html.twig', array(
+			'form' => $form->createView(),
+		));
 		
 	}
+	
+	public function editeditionAction($id, Request $request){
+	
+		$em = $this->getDoctrine()->getManager();
+		$edition = $em->getRepository('BiblioGeneralBundle:Edition')->find($id);
+
+		$form = $this->get('form.factory')->createBuilder('form', $edition)
+			->add('Nom',     'text')
+			->add('save',      'submit')
+			->getForm();
+		
+		$form->handleRequest($request);
+
+		if ($form->isValid()) {
+		
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($edition);
+			$em->flush();
+
+			$request->getSession()->getFlashBag()->add('notice', 'Edition bien enregistré.');
+
+			return $this->redirect($this->generateUrl('biblio_general_showedition', array('id' => $edition->getId())));
+		}
+
+		return $this->render('BiblioGeneralBundle:Default:editedition.html.twig', array(
+			'form' => $form->createView(),
+		));
+		
+	}
+	
+	public function deleteeditionAction($id)
+    {
+		
+		$em = $this->getDoctrine()->getManager();
+		$edition = $em->getRepository('BiblioGeneralBundle:Edition')->find($id);
+		
+		if (null === $edition) {
+		  throw new NotFoundHttpException("L'édition d'id ".$id." n'existe pas.");
+		}
+		
+		$em->remove($edition);
+		$em->flush();
+		
+		return $this->redirect($this->generateUrl('biblio_general_showeditions'));
+    }
 	
 	public function showeditionsAction()
     {
@@ -442,22 +592,80 @@ class DefaultController extends Controller
     }
 	
 	
-	public function addempruntAction(){
 	
-		$em = $this->getDoctrine()->getManager();
-		
+
+	public function addempruntAction($idUser=128, $idExemplaire){
+	
 		$emprunt = new Emprunt();
-		$inscrit=$em->getRepository('BiblioGeneralBundle:Inscrit')->findOneByNom("Morel");
-		$emprunt->setInscrit($inscrit);
-		$emprunt->setDelais(30);
-		$emprunt->setExemplaire($em->getRepository('BiblioGeneralBundle:Exemplaire')->find(1));
 		
+		$em = $this->getDoctrine()->getManager();
+		$user = $em->getRepository('BiblioGeneralBundle:Inscrit')->find($idUser);
+		$exemplaire = $em->getRepository('BiblioGeneralBundle:Exemplaire')->find($idExemplaire);
+		
+		if (null === $user) {
+		  throw new NotFoundHttpException("L'utilisateur d'id ".$idUser." n'existe pas.");
+		}
+		if (null === $exemplaire) {
+		  throw new NotFoundHttpException("L'exemplaire d'id ".$idExemplaire." n'existe pas.");
+		}
+		
+		$emprunt->setInscrit($user);
+		$emprunt->setExemplaire($exemplaire);
+		$emprunt->setDelais(30);
 		$em->persist($emprunt);
 		$em->flush();
 		
-		return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $inscrit->getId())));
+		return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $user->getId())));
+
 		
 	}
+	
+	public function editempruntAction($id, Request $request){
+	
+		$em = $this->getDoctrine()->getManager();
+		$emprunt = $em->getRepository('BiblioGeneralBundle:Emprunt')->find($id);
+
+		$form = $this->get('form.factory')->createBuilder('form', $emprunt)
+			->add('delais',      'integer')
+			->add('save',      'submit')
+			->getForm();
+		
+		$form->handleRequest($request);
+
+		if ($form->isValid()) {
+		
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($emprunt);
+			$em->flush();
+
+			$request->getSession()->getFlashBag()->add('notice', 'Emprunt bien enregistré.');
+
+			return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $emprunt->getInscrit()->getId())));
+		}
+
+		return $this->render('BiblioGeneralBundle:Default:editemprunt.html.twig', array(
+			'form' => $form->createView(),
+		));
+		
+	}
+	
+	public function deleteempruntAction($id)
+    {
+		
+		$em = $this->getDoctrine()->getManager();
+		$emprunt = $em->getRepository('BiblioGeneralBundle:Emprunt')->find($id);
+		
+		if (null === $emprunt) {
+		  throw new NotFoundHttpException("L'emprunt d'id ".$id." n'existe pas.");
+		}
+		
+		$idUser=$emprunt->getInscrit()->getId();
+		
+		$em->remove($emprunt);
+		$em->flush();
+		
+		return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $idUser)));
+    }
 	
 	public function showempruntsAction()
     {
