@@ -2,6 +2,48 @@
 {% block title %}Ajouter un livre{% endblock %}
 {% block body %}
 
-{{ form(form) }}
+<div class="well">
+	{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+		{{ form_errors(form) }}
+
+		<div class="form-group">
+			{{ form_label(form.titre, "Titre", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-4">
+				{{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.auteurs, "Auteurs", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-4">
+				{{ form_widget(form.auteurs, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.annee, "Annee", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-4">
+				{{ form_widget(form.annee, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.resume, "Resume", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-4">
+				{{ form_widget(form.resume, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.typelivre, "Type du livre", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-4">
+				{{ form_widget(form.typelivre, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+
+		{{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+		{{ form_rest(form) }}
+  {{ form_end(form) }}
+</div>
 
 {% endblock %}

@@ -1,8 +1,8 @@
 {% extends '::base.html.twig' %}
-{% block title %}Ajouter un auteur{% endblock %}
+{% block title %}Modifier un auteur{% endblock %}
 {% block body %}
 
-<h3>Nouvel auteur : </h3>
+<h3>Modification de l'auteur : {{ auteur.prenom }} {{ auteur.nom }}</h3>
 
 <div class="well">
 	{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
@@ -25,7 +25,7 @@
 	<div class="form-group">
       {{ form_label(form.naissance, "Naissance", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
       <div class="col-sm-4">
-        {{ form_widget(form.naissance, {'attr': {'class': 'form-control'}}) }}
+        {{ form_widget(form.naissance) }}
       </div>
     </div>
 	

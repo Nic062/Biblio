@@ -30,7 +30,7 @@ class DefaultController extends Controller
 		$form = $this->get('form.factory')->createBuilder('form', $user)
 			->add('nom',     'text')
 			->add('prenom',   'text')
-			->add('naissance',      'date')
+			->add('naissance',      'birthday')
 			->add('rue',      'text')
 			->add('ville',      'text')
 			->add('cp',      'text')
@@ -67,7 +67,7 @@ class DefaultController extends Controller
 		$form = $this->get('form.factory')->createBuilder('form', $user)
 			->add('nom',     'text')
 			->add('prenom',   'text')
-			->add('naissance',      'date')
+			->add('naissance',      'birthday')
 			->add('rue',      'text')
 			->add('ville',      'text')
 			->add('cp',      'text')
@@ -148,7 +148,9 @@ class DefaultController extends Controller
 		$form = $this->get('form.factory')->createBuilder('form', $auteur)
 			->add('nom',     'text')
 			->add('prenom',   'text')
-			->add('naissance',      'date')
+			->add('naissance',      'birthday' , array(
+				'years' => range(Date('Y')-400, Date('Y'))
+			))
 			->add('save',      'submit')
 			->getForm();
 		;
@@ -179,7 +181,9 @@ class DefaultController extends Controller
 		$form = $this->get('form.factory')->createBuilder('form', $auteur)
 			->add('nom',     'text')
 			->add('prenom',   'text')
-			->add('naissance',      'date')
+			->add('naissance',      'birthday', array(
+				'years' => range(Date('Y')-400, Date('Y'))
+			))
 			->add('save',      'submit')
 			->getForm();
 		;
@@ -197,8 +201,9 @@ class DefaultController extends Controller
 			return $this->redirect($this->generateUrl('biblio_general_showautor', array('id' => $auteur->getId())));
 		}
 
-		return $this->render('BiblioGeneralBundle:Default:addautor.html.twig', array(
+		return $this->render('BiblioGeneralBundle:Default:editautor.html.twig', array(
 			'form' => $form->createView(),
+			'auteur' => $auteur
 		));
 		
 	}
@@ -281,6 +286,12 @@ class DefaultController extends Controller
 	
 		$livre = new Livre();
 
+
+		$choices = array();
+		for($i=2015; $i > 999; $i--) {
+			$choices[$i] = $i;
+		}
+
 		$form = $this->get('form.factory')->createBuilder('form', $livre)
 			->add('titre',     'text')
 			->add('auteurs', 'entity', array(
@@ -288,8 +299,11 @@ class DefaultController extends Controller
 			  'property' => 'nom',
 			  'multiple' => true
 			))
-			->add('annee',   'integer')
-			->add('resume',      'text')
+			->add('annee',   'choice', array(
+				'label' => 'annee',
+				'choices' => $choices
+			))
+			->add('resume',      'textarea')
 			->add('typelivre', 'entity', array(
 			  'class'    => 'BiblioGeneralBundle:TypeLivre',
 			  'property' => 'libelle'
@@ -321,6 +335,11 @@ class DefaultController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$livre = $em->getRepository('BiblioGeneralBundle:Livre')->find($id);
 
+		$choices = array();
+		for($i=2015; $i > 999; $i--) {
+			$choices[$i] = $i;
+		}
+
 		$form = $this->get('form.factory')->createBuilder('form', $livre)
 			->add('titre',     'text')
 			->add('auteurs', 'entity', array(
@@ -328,7 +347,10 @@ class DefaultController extends Controller
 			  'property' => 'nom',
 			  'multiple' => true
 			))
-			->add('annee',   'integer')
+			->add('annee',   'choice', array(
+				'label' => 'annee',
+				'choices' => $choices
+			))
 			->add('resume',      'text')
 			->add('typelivre', 'entity', array(
 			  'class'    => 'BiblioGeneralBundle:TypeLivre',
