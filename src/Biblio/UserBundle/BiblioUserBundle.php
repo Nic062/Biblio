@@ -6,7 +6,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class BiblioUserBundle extends Bundle
 {
-	public function getParent(){
-		return;
-	}
+	public function getParent()
+    {
+        return 'FOSUserBundle';
+    }
 }
