@@ -92,6 +92,7 @@ class DefaultController extends Controller
 
 		return $this->render('BiblioGeneralBundle:Default:edituser.html.twig', array(
 			'form' => $form->createView(),
+			'user' => $user
 		));
 		
 	}
@@ -374,6 +375,7 @@ class DefaultController extends Controller
 
 		return $this->render('BiblioGeneralBundle:Default:editlivre.html.twig', array(
 			'form' => $form->createView(),
+			'livre' => $livre
 		));
 		
 	}
@@ -452,7 +454,7 @@ class DefaultController extends Controller
 			return $this->redirect($this->generateUrl('biblio_general_showlivre', array('id' => $exemplaire->getLivre()->getId())));
 		}
 
-		return $this->render('BiblioGeneralBundle:Default:addedition.html.twig', array(
+		return $this->render('BiblioGeneralBundle:Default:addexemplaire.html.twig', array(
 			'form' => $form->createView(),
 		));
 		
@@ -488,7 +490,7 @@ class DefaultController extends Controller
 			return $this->redirect($this->generateUrl('biblio_general_showlivre', array('id' => $exemplaire->getLivre()->getId())));
 		}
 
-		return $this->render('BiblioGeneralBundle:Default:addedition.html.twig', array(
+		return $this->render('BiblioGeneralBundle:Default:editexemplaire.html.twig', array(
 			'form' => $form->createView(),
 		));
 		
@@ -519,7 +521,7 @@ class DefaultController extends Controller
 		$edition = new Edition();
 
 		$form = $this->get('form.factory')->createBuilder('form', $edition)
-			->add('Nom',     'text')
+			->add('nom',     'text')
 			->add('save',      'submit')
 			->getForm();
 		
@@ -538,6 +540,7 @@ class DefaultController extends Controller
 
 		return $this->render('BiblioGeneralBundle:Default:addedition.html.twig', array(
 			'form' => $form->createView(),
+			'edition' => $edition
 		));
 		
 	}
@@ -548,7 +551,7 @@ class DefaultController extends Controller
 		$edition = $em->getRepository('BiblioGeneralBundle:Edition')->find($id);
 
 		$form = $this->get('form.factory')->createBuilder('form', $edition)
-			->add('Nom',     'text')
+			->add('nom',     'text')
 			->add('save',      'submit')
 			->getForm();
 		
@@ -567,6 +570,7 @@ class DefaultController extends Controller
 
 		return $this->render('BiblioGeneralBundle:Default:editedition.html.twig', array(
 			'form' => $form->createView(),
+			'edition' => $edition
 		));
 		
 	}

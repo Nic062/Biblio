@@ -2,6 +2,21 @@
 {% block title %}Ajouter une édition{% endblock %}
 {% block body %}
 
-{{ form(form) }}
+<h3>Nouvelle édition : </h3>
+
+<div class="well">
+	{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+		{{ form_errors(form) }}
+
+		<div class="form-group">
+			{{ form_label(form.nom, "Nom", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-4">
+				{{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		{{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+		{{ form_rest(form) }}
+  {{ form_end(form) }}
+</div>
 
 {% endblock %}
