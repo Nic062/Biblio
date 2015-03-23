@@ -8,45 +8,86 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Bibliothèque</a>
+      <a class="navbar-brand" href="{{ path('biblio_general_homepage') }}"><i class="fa fa-home"></i>  Bibliothèque</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="{{ path('biblio_general_homepage') }}"><i class="fa fa-home"></i>  Accueil</a></li>
+       {# Admin #}
+       <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Infos pratiques<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Horaires d'ouverture</a></li>
+            <li><a href="#">Réglements</a></li>
+            <li><a href="#">Fonctionnement et inscription</a>
+            <li><a href="#">Nous contacter</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Site de la mairie</a></li>
+          </ul>
+        </li>
       </ul>
-	  <ul class="nav navbar-nav">
+      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and is_granted("ROLE_ADMIN")  %}
+      <ul class="nav navbar-nav">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Afficher... <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="{{ path('biblio_general_showusers') }}">Liste des membres</a></li>
-			<li><a href="{{ path('biblio_general_showautors') }}">Liste des auteurs</a></li>
-			<li><a href="{{ path('biblio_general_showtypeslivre') }}">Liste des types de livre</a></li>
-			<li><a href="{{ path('biblio_general_showlivres') }}">Liste des livres</a></li>
-			<li><a href="{{ path('biblio_general_showeditions') }}">Liste des éditeurs</a></li>
-			<li><a href="{{ path('biblio_general_showemprunts') }}">Liste des emprunts</a></li>
+      			<li><a href="{{ path('biblio_general_showautors') }}">Liste des auteurs</a></li>
+      			<li><a href="{{ path('biblio_general_showtypeslivre') }}">Liste des types de livre</a></li>
+      			<li><a href="{{ path('biblio_general_showlivres') }}">Liste des livres</a></li>
+      			<li><a href="{{ path('biblio_general_showeditions') }}">Liste des éditeurs</a></li>
+      			<li><a href="{{ path('biblio_general_showemprunts') }}">Liste des emprunts</a></li>
           </ul>
         </li>
       </ul>
-	  <ul class="nav navbar-nav">
+      {% endif %}
+       {# Connected #}
+      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+      <ul class="nav navbar-nav">
         <li><a href="#"></i>Rechercher un livre</a></li>
       </ul>
-	  <ul class="nav navbar-nav">
+      {% endif %}
+      {# Admin #}
+      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and is_granted("ROLE_ADMIN")  %}
+      <ul class="nav navbar-nav">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Nouveau... <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="{{ path('biblio_general_addlivre') }}">Livre</a></li>
             <li><a href="{{ path('biblio_general_addexemplaire') }}">Exemplaire</a></li>
-			<li><a href="{{ path('biblio_general_addautor') }}">Auteur</a></li>
+            <li><a href="{{ path('biblio_general_addautor') }}">Auteur</a></li>
             <li><a href="{{ path('biblio_general_addedition') }}">Editeur</a></li>
+            <li class="divider"></li>
+            <li><a href="#">News</a></li>
             <li class="divider"></li>
             <li><a href="{{ path('biblio_general_adduser') }}">Client</a></li>
           </ul>
         </li>
       </ul>
+      {% endif %}
+      {# Connecté / non connecté #}
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Mon compte</a></li>
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
+           <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mon compte <span class="caret"></span></a>
+              {#<ul class="dropdown-menu" role="menu">
+                <li><a href="{{ path('biblio_general_showusers') }}">Liste des membres</a></li>
+                <li><a href="{{ path('biblio_general_showautors') }}">Liste des auteurs</a></li>
+                <li><a href="{{ path('biblio_general_showtypeslivre') }}">Liste des types de livre</a></li>
+                <li><a href="{{ path('biblio_general_showlivres') }}">Liste des livres</a></li>
+                <li><a href="{{ path('biblio_general_showeditions') }}">Liste des éditeurs</a></li>
+                <li><a href="{{ path('biblio_general_showemprunts') }}">Liste des emprunts</a></li>
+              </ul>#}
+            </li>
+          </ul>
+           <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+          {# L'utilisateur est connecté ! #}
+        {% else %}
+            <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
+        {% endif %}
+
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
