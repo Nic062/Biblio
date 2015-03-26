@@ -704,4 +704,23 @@ class DefaultController extends Controller
 		));
     }
 	
+	public function openinghoursAction(){
+		return $this->render('BiblioGeneralBundle:Default:openinghours.html.twig');
+	}
+
+	public function regulationAction(){
+		return $this->render('BiblioGeneralBundle:Default:regulation.html.twig');
+	}
+
+	public function functioningAction(){
+		return $this->render('BiblioGeneralBundle:Default:functioning.html.twig');
+	}
+
+	public function contactAction(){
+		return $this->render('BiblioGeneralBundle:Default:contact.html.twig');
+	}
+
+	public function townhallAction(){
+		return $this->render('BiblioGeneralBundle:Default:townhall.html.twig');
+	}
 }

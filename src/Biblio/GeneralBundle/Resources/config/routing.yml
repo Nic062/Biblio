@@ -96,3 +96,23 @@ biblio_general_deleteemprunt:
 biblio_general_showemprunts:
     path:     /showemprunts
     defaults: { _controller: BiblioGeneralBundle:Default:showemprunts }
+
+biblio_general_openinghours:
+    path:     /openinghours
+    defaults: { _controller: BiblioGeneralBundle:Default:openinghours }
+
+biblio_general_regulation:
+    path:     /regulation
+    defaults: { _controller: BiblioGeneralBundle:Default:regulation }
+
+biblio_general_functioning:
+    path:     /functioning
+    defaults: { _controller: BiblioGeneralBundle:Default:functioning }
+
+biblio_general_contact:
+    path:     /contact
+    defaults: { _controller: BiblioGeneralBundle:Default:contact }
+
+biblio_general_townhall:
+    path:     /townhall
+    defaults: { _controller: BiblioGeneralBundle:Default:townhall }
