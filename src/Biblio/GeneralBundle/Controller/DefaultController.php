@@ -11,13 +11,18 @@ use Biblio\GeneralBundle\Entity\Emprunt;
 use Biblio\GeneralBundle\Entity\Auteur;
 use Biblio\GeneralBundle\Entity\Inscrit;
 use Biblio\GeneralBundle\Entity\Edition;
+use Biblio\GeneralBundle\Entity\News;
 
 class DefaultController extends Controller
 {
     public function indexAction()
     {
+    	$em = $this->getDoctrine()->getManager();
+    	$listeNews = $em->getRepository('BiblioGeneralBundle:News')->findAll();
 
-        return $this->render('BiblioGeneralBundle:Default:index.html.twig');
+        return $this->render('BiblioGeneralBundle:Default:index.html.twig', array(
+        	'news' => $listeNews
+        ));
     }
 	
 	
@@ -703,6 +708,36 @@ class DefaultController extends Controller
 			'listEmprunts'           => $listEmprunts
 		));
     }
+
+    public function addnewsAction(Request $request){
+			
+		$auteur = $this->getUser();
+		$news = new News();
+
+		$form = $this->get('form.factory')->createBuilder('form', $news)
+			->add('titre', 'text')
+			->add('contenu', 'textarea')
+			->add('save', 'submit')
+			->getForm();
+
+		$form->handleRequest($request);
+		$news->setAuteur($auteur);
+		//$news->setDatePubli();
+
+		if($form->isvalid()){
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($news);
+			$em->flush();
+
+			$request->getSession()->getFlashBag()->add('notice', 'News bien enregistrée.');
+
+			return $this->redirect($this->generateUrl('biblio_general_homepage'));
+		}
+
+		return $this->render('BiblioGeneralBundle:Default:addnews.html.twig', array(
+			'form' => $form->createView()
+		));
+	}
 	
 	public function openinghoursAction(){
 		return $this->render('BiblioGeneralBundle:Default:openinghours.html.twig');

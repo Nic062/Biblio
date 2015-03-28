@@ -116,3 +116,7 @@ biblio_general_contact:
 biblio_general_townhall:
     path:     /townhall
     defaults: { _controller: BiblioGeneralBundle:Default:townhall }
+
+biblio_general_addnews:
+    path:    /addnews
+    defaults: { _controller: BiblioGeneralBundle:Default:addnews }

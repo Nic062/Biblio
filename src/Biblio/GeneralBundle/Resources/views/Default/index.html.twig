@@ -52,17 +52,13 @@
 </div>
 </div>
 
-<h3>Espace actualité :</h3>
-<h5>Le 22/03/2015 par Nicolas</h5>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br><br><br>
-
-
-
-
+<h2>Espace actualité :</h2>
+{% for new in news %}
+  <div class="text-center">
+    <h3>{{ new.titre }}<small> par {{ new.auteur.username }} le {{ new.datePubli|date('d/m/y') }}</small></h3>
+    <p class="text-center">{{ new.contenu }}</p>
+    <HR width=50%>
+  </div>
+{% endfor %}
 
 {% endblock %}
