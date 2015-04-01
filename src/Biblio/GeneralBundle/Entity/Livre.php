@@ -20,6 +20,13 @@ class Livre
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+	
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="isbn", type="string", length=13)
+     */
+    private $isbn;
 
     /**
      * @var string
@@ -69,6 +76,29 @@ class Livre
     public function getId()
     {
         return $this->id;
+    }
+	
+	/**
+     * Get isbn
+     *
+     * @return string 
+     */
+    public function getIsbn()
+    {
+        return $this->isbn;
+    }
+	
+	/**
+     * Set isbn
+     *
+     * @param string $isbn
+     * @return Livre
+     */
+    public function setIsbn($isbn)
+    {
+        $this->isbn = $isbn;
+    
+        return $this;
     }
 
     /**

@@ -294,11 +294,17 @@ class DefaultController extends Controller
 
 
 		$choices = array();
-		for($i=2015; $i > 999; $i--) {
+		for($i=date("Y"); $i > 999; $i--) {
 			$choices[$i] = $i;
 		}
 
 		$form = $this->get('form.factory')->createBuilder('form', $livre)
+			->add('isbn',     'text',  array(
+			'attr' => array(
+			'placeholder' => 'ISBN10 / ISBN13',
+			)))
+			
+			->add('searchisbn',      'submit')
 			->add('titre',     'text')
 			->add('auteurs', 'entity', array(
 			  'class'    => 'BiblioGeneralBundle:Auteur',
