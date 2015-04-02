@@ -4,29 +4,39 @@
 
 <p>Bonjour, je m'appelle <b>{{autor.prenom}} {{autor.nom}}</b> et je suis né en <b>{{autor.naissance|date('Y')}}</b> ! Je suis auteur de : </p>
 
-<table class="table table-striped table-hover">
-	<thead>
-		<tr>
-			<th>##</th>
-			<th>Type de livre</th>
-			<th>Titre</th>
-			<th>Année</th>
-			<th>Résumé</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% if autor.livres is not empty %}
-			{% for livre in autor.livres %}
-				<tr>
-					<th><a href="{{ path('biblio_general_showlivre',{ 'id':livre.id }) }}}">{{ livre.id }}</a></th>
-					<td>{{ livre.typeLivre.libelle }}</td>
-					<td>{{ livre.titre }}</td>
-					<td>{{ livre.annee }}</td>
-					<td>{{ livre.resume | slice(0, 50) }}</td>
-				</tr>
-			{% endfor %}
-		{% endif %}
-	</tbody>
-</table>
+
+<div class="panel panel-primary filterable">
+            <div class="panel-heading">
+                <h3 class="panel-title">Liste des livres de <b>{{autor.prenom}} {{autor.nom}}</b> :</h3>
+                <div class="pull-right">
+                    <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Recherche par filtres</button>
+                </div>
+            </div>
+
+	<table class="table table-striped table-hover">
+		<thead>
+	        <tr class="filters">
+	            <th><input type="text" class="form-control" placeholder="##" disabled></th>
+	            <th><input type="text" class="form-control" placeholder="Genre" disabled></th>
+	            <th><input type="text" class="form-control" placeholder="Titre" disabled></th>
+	            <th><input type="text" class="form-control" placeholder="Année" disabled></th>
+	            <th><input type="text" class="form-control" placeholder="Résumé" disabled></th>
+	        </tr>
+	    </thead>
+		<tbody>
+			{% if autor.livres is not empty %}
+				{% for livre in autor.livres %}
+					<tr>
+						<td><b><a href="{{ path('biblio_general_showlivre',{ 'id':livre.id }) }}}">{{ livre.id }}</a></b></td>
+						<td>{{ livre.typeLivre.libelle }}</td>
+						<td>{{ livre.titre }}</td>
+						<td>{{ livre.annee }}</td>
+						<td>{{ livre.resume | slice(0, 50) }}</td>
+					</tr>
+				{% endfor %}
+			{% endif %}
+		</tbody>
+	</table>
+</div>
 
 {% endblock %}

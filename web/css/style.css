@@ -5,6 +5,10 @@ body{
 	
 }
 
+
+/* /////////////////////////// */
+
+/* Design tableau affichage et fonction recherche */
 .filterable {
     margin-top: 15px;
 }
@@ -28,3 +32,5 @@ body{
 .filterable .filters input[disabled]:-ms-input-placeholder {
     color: #333;
 }
+
+/* //////////////////////// */

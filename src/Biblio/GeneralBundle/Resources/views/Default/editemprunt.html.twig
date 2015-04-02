@@ -2,6 +2,21 @@
 {% block title %}Editer un emprunt{% endblock %}
 {% block body %}
 
-{{ form(form) }}
+<h3>Modification du délai :</h3>
+
+<div class="well">
+	{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+		{{ form_errors(form) }}
+
+		<div class="form-group">
+			{{ form_label(form.delais, "Délai", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-4">
+				{{ form_widget(form.delais, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		{{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+		{{ form_rest(form) }}
+  {{ form_end(form) }}
+</div>
 
 {% endblock %}
