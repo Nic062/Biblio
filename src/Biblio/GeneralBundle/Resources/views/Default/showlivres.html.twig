@@ -2,54 +2,52 @@
 {% block title %}Liste des Livres{% endblock %}
 {% block body %}
 
-<div class="col-md-3">
-    <form action="#" method="get">
-        <div class="input-group">
-            <input class="form-control" id="system-search" name="q" placeholder="Entrez votre recherche" required>
-            <span class="input-group-btn">
-                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-            </span>
-        </div>
-    </form>
-</div>
 
-<table class="table table-striped table-hover table-list-search">
-	<thead>
-		<tr>
-			<th>##</th>
-			<th>Titre</th>
-			<th>Auteur(s)</th>
-			<th>Année</th>
-			<th>Type de livre</th>
-			<th>Résumé</th>
-			<th>ISBN</th>
-			<th>Modifier</th>
-			<th>Supprimer</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% if listLivres is not empty %}
-			{% for livre in listLivres %}
-				<tr>
-					<th><a href="{{ path('biblio_general_showlivre',{ 'id':livre.id }) }}}">{{ livre.id }}</a></th>
-					<td>{{ livre.titre }}</td>
-					<td>
-{% if livre.auteurs is not empty %}
-    {% for auteur in livre.auteurs %}
-      {{ auteur.prenom }} {{ auteur.nom }}{% if not loop.last %}, {% endif %}
-    {% endfor %}
-{% endif %}
-					</td>
-					<td>{{ livre.annee }}</td>
-					<td>{{ livre.typeLivre.libelle }}</td>
-					<td>{{ livre.resume | slice(0, 50) }}</td>
-					<td>{{livre.isbn}}</td>
-					<th><a href="{{ path('biblio_general_editlivre',{ 'id':livre.id }) }}}">Editer</a></th>
-					<th><a href="{{ path('biblio_general_deletelivre',{ 'id':livre.id }) }}}">Supprimer</a></th>
-				</tr>
-			{% endfor %}
-		{% endif %}
-	</tbody>
-</table>
+        <div class="panel panel-primary filterable">
+            <div class="panel-heading">
+                <h3 class="panel-title">Liste des livres :</h3>
+                <div class="pull-right">
+                    <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span>Recherche par filtres</button>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr class="filters">
+                        <th><input type="text" class="form-control" placeholder="##" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Titre" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Auteur(s)" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Année" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Type de livre" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Résumé" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="ISBN" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Modifier" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Supprimer" disabled></th>
+                    </tr>
+                </thead>
+                <tbody>
+					{% if listLivres is not empty %}
+						{% for livre in listLivres %}
+							<tr>
+								<td><a href="{{ path('biblio_general_showlivre',{ 'id':livre.id }) }}}">{{ livre.id }}</a></td>
+								<td>{{ livre.titre }}</td>
+								<td>
+									{% if livre.auteurs is not empty %}
+									    {% for auteur in livre.auteurs %}
+									      {{ auteur.prenom }} {{ auteur.nom }}{% if not loop.last %}, {% endif %}
+									    {% endfor %}
+									{% endif %}
+								</td>
+								<td>{{ livre.annee }}</td>
+								<td>{{ livre.typeLivre.libelle }}</td>
+								<td>{{ livre.resume | slice(0, 50) }}</td>
+								<td>{{livre.isbn}}</td>
+								<th><a href="{{ path('biblio_general_editlivre',{ 'id':livre.id }) }}}">Editer</a></th>
+								<th><a href="{{ path('biblio_general_deletelivre',{ 'id':livre.id }) }}}">Supprimer</a></th>
+							</tr>
+						{% endfor %}
+					{% endif %}
+				</tbody>
+            </table>
+        </div>
 
 {% endblock %}
