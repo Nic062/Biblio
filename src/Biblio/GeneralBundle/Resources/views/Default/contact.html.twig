@@ -7,15 +7,56 @@
 
 <div class="row">
 	<div class="contact col-xs-12 col-md-7">
-		<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2541.1434303682013!2d2.8073500000000005!3d50.43842899999999!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47dd308a06db2f01%3A0x2671190e96c659c0!2sIUT+de+LENS!5e0!3m2!1sfr!2sfr!4v1427400908706" width="600" height="450" frameborder="0" style="border:0"></iframe>
+		<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2541.1434303682013!2d2.8073500000000005!3d50.43842899999999!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47dd308a06db2f01%3A0x2671190e96c659c0!2sIUT+de+LENS!5e0!3m2!1sfr!2sfr!4v1427400908706" width="550" height="450" frameborder="0" style="border:0"></iframe>
 	</div>
 	<div class="col-xs-12 col-md-5">
-		<h4>Adresse :</h4>
-		<p>IUT de Lens</p>
-		<p>Rue de l'Université</p>
-		<p>62300 Lens</p>
+		<address>
+			<h4>Adresse :</h4>
+			<p>IUT de Lens</p>
+			<p>Rue de l'Université</p>
+			<p>62300 Lens</p>
+		</address>
 	</div>
-	
+
+	<div class="col-xs-12 col-md-5">
+		<h4>Contactez-nous :</h4>
+
+		{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+			{{ form_errors(form) }}
+			
+			<div class="form-group">
+				{#{{ form_label(form.nom, "Nom", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}#}
+				<div class="col-sm-10">
+					{{ form_widget(form.nom, {'attr': {'class': 'form-control','placeholder':'Nom'}}) }}
+				</div>
+			</div>
+
+			<div class="form-group">
+				{#{{ form_label(form.prenom, "Prénom", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}#}
+				<div class="col-sm-10">
+					{{ form_widget(form.prenom, {'attr': {'class': 'form-control','placeholder':'Prénom'}}) }}
+				</div>
+			</div>
+
+			<div class="form-group">
+				{#{{ form_label(form.email, "Email", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}#}
+				<div class="col-sm-10">
+					{{ form_widget(form.email, {'attr': {'class': 'form-control','placeholder':'Email'}}) }}
+				</div>
+			</div>
+
+			<div class="form-group">
+				{#{{ form_label(form.message, "Message", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}#}
+				<div class="col-sm-10">
+					{{ form_widget(form.message, {'attr': {'class': 'form-control','placeholder':'Message'}}) }}
+				</div>
+			</div>
+
+
+			{{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}, 'label': 'Envoyer'}) }}
+			{{ form_rest(form) }}
+	  	{{ form_end(form) }}
+	</div>
 </div>
 
 

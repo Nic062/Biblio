@@ -1,0 +1,12 @@
+{% extends '::base.html.twig' %}
+{% block title %}Messages{% endblock %}
+{% block body %}
+
+
+<p>Message de <b>{{msg.prenom}} {{msg.nom}}</b></p>
+<p>Email : <b>{{msg.email}}</b></p>
+<p>{{msg.message}}</p>
+</br>
+<p><b><a href="{{path('biblio_general_messagecontact')}}">RETOUR</a></b></p>
+
+{% endblock %}

@@ -12,6 +12,7 @@ use Biblio\GeneralBundle\Entity\Auteur;
 use Biblio\GeneralBundle\Entity\Inscrit;
 use Biblio\GeneralBundle\Entity\Edition;
 use Biblio\GeneralBundle\Entity\News;
+use Biblio\GeneralBundle\Entity\MessageContact;
 
 class DefaultController extends Controller
 {
@@ -757,11 +758,69 @@ class DefaultController extends Controller
 		return $this->render('BiblioGeneralBundle:Default:functioning.html.twig');
 	}
 
-	public function contactAction(){
-		return $this->render('BiblioGeneralBundle:Default:contact.html.twig');
+	public function contactAction(Request $request){
+
+
+		$msg = new MessageContact();
+
+		$form = $this->get('form.factory')->createBuilder('form', $msg)
+			
+			->add('nom',     'text')
+			->add('prenom',     'text')
+			->add('email',     'text')
+			->add('message',     'textarea')
+
+			->add('save',      'submit')
+			->getForm();
+		
+		$form->handleRequest($request);
+
+		if ($form->isValid()) {
+		
+			$m = $this->getDoctrine()->getManager();
+			$m->persist($msg);
+			$m->flush();
+
+			$request->getSession()->getFlashBag()->add('notice', 'Message bien envoyé.');
+
+			return $this->redirect($this->generateUrl('biblio_general_contact'));
+		}
+
+		return $this->render('BiblioGeneralBundle:Default:contact.html.twig', array(
+			'form' => $form->createView(),
+		));
+
 	}
 
 	public function townhallAction(){
 		return $this->render('BiblioGeneralBundle:Default:townhall.html.twig');
 	}
+
+	public function messagecontactAction(){
+
+		$msg = $this->getDoctrine()->getManager();
+		$listMsg = $msg->getRepository('BiblioGeneralBundle:MessageContact')->findAll();
+		
+		return $this->render('BiblioGeneralBundle:Default:messagecontact.html.twig', array(
+			'listMsg'           => $listMsg
+		));	
+	}
+
+	public function showmessagecontactAction($id)
+    {
+		
+		$m = $this->getDoctrine()->getManager();
+		$message = $m->getRepository('BiblioGeneralBundle:MessageContact')->find($id);
+		
+		if (null === $message) {
+		  throw new NotFoundHttpException("Le message d'id ".$id." n'existe pas.");
+		}
+		
+		return $this->render('BiblioGeneralBundle:Default:showmessagecontact.html.twig', array(
+			'msg'           => $message
+		));
+
+
+    }
+
 }

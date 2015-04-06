@@ -60,6 +60,15 @@
         </li>
       </ul>
       {% endif %}
+
+
+      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and is_granted("ROLE_ADMIN")  %}
+        <ul class="nav navbar-nav">
+          <li><a href="{{ path('biblio_general_messagecontact') }}">Messages</a></li>
+        </ul>
+      {% endif %}
+
+
       {# Connecté / non connecté #}
       <ul class="nav navbar-nav navbar-right">
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}

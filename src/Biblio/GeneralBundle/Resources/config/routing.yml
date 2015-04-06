@@ -120,3 +120,11 @@ biblio_general_townhall:
 biblio_general_addnews:
     path:    /addnews
     defaults: { _controller: BiblioGeneralBundle:Default:addnews }
+
+biblio_general_messagecontact:
+    path:    /messagecontact
+    defaults: { _controller: BiblioGeneralBundle:Default:messagecontact }
+
+biblio_general_showmessagecontact:
+    path:    /showmessagecontact/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:showmessagecontact }
