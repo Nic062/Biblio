@@ -16,85 +16,43 @@
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
     <div class="item">
-
-      {% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
-        <img src="../imgs/carousel/1.png" alt="Image 1">
-        <div class="carousel-caption">
-          <h3>Image 1</h3>
-          <p>Texte descriptif</p>
-        </div>
-      {% else %}
-          <img src="imgs/carousel/1.png" alt="Image 1">
+          <img src="{{ app.request.getBasePath() }}/imgs/carousel/1.png" alt="Image 1">
           <div class="carousel-caption">
             <h3>Image 1</h3>
             <p>Texte descriptif</p>
           </div>
-      {% endif %}
-      
     </div>
+
     <div class="item">
-      {% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
-        <img src="../imgs/carousel/2.png" alt="Image 2">
-        <div class="carousel-caption">
-            <h3>Image 2</h3>
-            <p>Texte descriptif</p>
-          </div>
-        {% else %}
-          <img src="imgs/carousel/2.png" alt="Image 2">
+          <img src="{{ app.request.getBasePath() }}/imgs/carousel/2.png" alt="Image 2">
           <div class="carousel-caption">
             <h3>Image 2</h3>
             <p>Texte descriptif</p>
           </div>
-      {% endif %}
-     
     </div>
+
 	<div class="item active">
-      {% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
-        <img src="../imgs/carousel/3.png" alt="Image 3">
-        <div class="carousel-caption">
-            <h3>Image 3</h3>
-            <p>Texte descriptif</p>
-          </div>
-        {% else %}
-          <img src="imgs/carousel/3.png" alt="Image 3">
+      <img src="{{ app.request.getBasePath() }}/imgs/carousel/3.png" alt="Image 3">
           <div class="carousel-caption">
             <h3>Image 3</h3>
             <p>Texte descriptif</p>
           </div>
-      {% endif %}
-
     </div>
+
 	<div class="item">
-      {% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
-        <img src="../imgs/carousel/4.png" alt="Image 4">
-        <div class="carousel-caption">
-            <h3>Image 4</h3>
-            <p>Texte descriptif</p>
-          </div>
-        {% else %}
-          <img src="imgs/carousel/4.png" alt="Image 4">
+      <img src="{{ app.request.getBasePath() }}/imgs/carousel/4.png" alt="Image 4">
           <div class="carousel-caption">
             <h3>Image 4</h3>
             <p>Texte descriptif</p>
           </div>
-      {% endif %}
-
     </div>
+
 	<div class="item">
-      {% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
-        <img src="../imgs/carousel/5.png" alt="Image 5">
-        <div class="carousel-caption">
-            <h3>Image 5</h3>
-            <p>Texte descriptif</p>
-          </div>
-        {% else %}
-          <img src="imgs/carousel/5.png" alt="Image 5">
+      <img src="{{ app.request.getBasePath() }}/imgs/carousel/5.png" alt="Image 5">
           <div class="carousel-caption">
             <h3>Image 5</h3>
             <p>Texte descriptif</p>
           </div>
-      {% endif %}
-
     </div>
   </div>
 
@@ -109,6 +67,8 @@
   </a>
 </div>
 </div>
+
+{{ app.request.getBasePath() }}
 
 <h2>Espace actualité :</h2>
 {% for new in news %}
