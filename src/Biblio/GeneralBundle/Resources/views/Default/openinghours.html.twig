@@ -1,7 +1,56 @@
 {% extends '::base.html.twig' %}
-{% block title %}Horaire d'ouverture{% endblock %}
+{% block title %}Horaires d'ouverture{% endblock %}
 {% block body %}
 
-<p>Coucou</p>
+<h3>Horaires d'ouverture</h3>
+
+<div class="table-responsive">
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Matin</th>
+            <th>Après-midi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Lundi</th>
+            <td>9h30 / 12h30</td>
+            <td>14h / 18h30</td>
+        </tr>
+        <tr>
+            <th>Mardi</th>
+            <td>9h / 12h</td>
+            <td>13h30 / 18h</td>
+        </tr>
+        <tr>
+            <th>Mercredi</th>
+            <td>9h30 / 12h30</td>
+            <td>14h / 18h30</td>
+        </tr>
+        <tr>
+            <th>Jeudi</th>
+            <td>9h / 12h</td>
+            <td>13h30 / 18h</td>
+        </tr>
+        <tr>
+            <th>Vendredi</th>
+            <td>9h30 / 12h30</td>
+            <td>14h / 18h30</td>
+        </tr>
+        <tr>
+            <th>Samedi</th>
+            <td>10h / 12h</td>
+            <td>13h30 / 17h30</td>
+        </tr>
+        <tr>
+            <th>Dimanche</th>
+            <td>Fermé</td>
+            <td>Fermé</td>
+        </tr>
+    </tbody>
+</table>
+</div>                        		
 
 {% endblock %}
