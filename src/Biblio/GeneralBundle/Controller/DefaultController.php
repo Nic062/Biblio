@@ -305,7 +305,7 @@ class DefaultController extends Controller
 			'placeholder' => 'ISBN10 / ISBN13',
 			)))
 			
-			->add('searchisbn',      'submit')
+			->add('searchisbn',      'button')
 			->add('titre',     'text')
 			->add('auteurs', 'entity', array(
 			  'class'    => 'BiblioGeneralBundle:Auteur',

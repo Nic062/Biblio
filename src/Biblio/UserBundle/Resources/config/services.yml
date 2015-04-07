@@ -1,4 +1,9 @@
-services:
+#services:
 #    biblio_user.example:
 #        class: Biblio\UserBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+services:
+    biblio_user.registration.form.type:
+        class: Biblio\UserBundle\Form\Type\RegistrationFormType
+        tags:
+            - { name: form.type, alias: biblio_user_registration }

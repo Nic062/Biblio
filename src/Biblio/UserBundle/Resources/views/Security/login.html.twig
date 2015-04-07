@@ -7,24 +7,44 @@
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
 
-<form action="{{ path("fos_user_security_check") }}" method="post">
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-	<br />
-	<label for="username">{{ 'security.login.username'|trans }}</label>
-	<div class="input-group">
-		<span class="input-group-addon"><i class="fa fa-user"></i></span>
-		<input type="text" class="form-control" "id="username" name="_username" value="{{ last_username }}" required=required" />
+<div id="loginbox" style="margin-top:20px;" class="mainbox col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">
+	<div class="panel panel-info" >
+	<div class="panel-heading">
+		<div class="panel-title">Connexion</div>
+		<div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Mot de passe oublié ?</a></div>
 	</div>
-	
-	<label for="password">{{ 'security.login.password'|trans }}</label>
-	<div class="input-group">
-		<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-		<input type="password" class="form-control" id="password" name="_password" required="required" />
-	</div>
-    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+	<div style="padding-top:30px" class="panel-body" >
+		<div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+			<form action="{{ path("fos_user_security_check") }}" method="post">
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+				<label for="username">{{ 'security.login.username'|trans }}</label>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-user"></i></span>
+					<input type="text" class="form-control" "id="username" name="_username" value="{{ last_username }}" required=required" />
+				</div>
+				
+				<label for="password">{{ 'security.login.password'|trans }}</label>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+					<input type="password" class="form-control" id="password" name="_password" required="required" />
+				</div>
+				<input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+				<label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
 
-    <input type="submit" class="btn btn-block btn-success" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
-	<br />
-</form>
+				<input type="submit" class="btn btn-block btn-success" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+				<br />
+				 <div class="form-group">
+					<div class="col-md-12 control">
+						<div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
+							Pas encore inscrit ? 
+						<a href="http://lmgtfy.com/?q=Quentin+Dangreville+a+un+petit+sexe">
+							Comment s'inscrire 
+						</a>
+						</div>
+					</div>
+				</div>    
+			</form>
+		</div>
+	</div>
+</div>
 {% endblock fos_user_content %}
