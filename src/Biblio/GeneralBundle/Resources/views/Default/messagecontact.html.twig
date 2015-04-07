@@ -19,6 +19,7 @@
 	            <th><input type="text" class="form-control" placeholder="Prénom" disabled></th>
 	            <th><input type="text" class="form-control" placeholder="Email" disabled></th>
 	            <th><input type="text" class="form-control" placeholder="Message" disabled></th>
+	            <th>Supprimer</th>
 	        </tr>
 	    </thead>
 		<tbody>
@@ -30,6 +31,7 @@
 						<td>{{ msg.prenom }}</td>
 						<td>{{ msg.email }}</td>
 						<td>{{ msg.message | slice(0, 20)}}</td>
+						<td><b><a href="{{ path('biblio_general_deletemessagecontact',{ 'id':msg.id }) }}}">Supprimer</a></b></td>
 					</tr>
 				{% endfor %}
 			{% endif %}

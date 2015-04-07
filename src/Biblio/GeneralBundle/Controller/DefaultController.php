@@ -823,4 +823,20 @@ class DefaultController extends Controller
 
     }
 
+    public function deletemessagecontactAction($id)
+    {
+		
+		$m = $this->getDoctrine()->getManager();
+		$message = $m->getRepository('BiblioGeneralBundle:MessageContact')->find($id);
+		
+		if (null === $message) {
+		  throw new NotFoundHttpException("Le message d'id ".$id." n'existe pas.");
+		}
+		
+		$m->remove($message);
+		$m->flush();
+		
+		return $this->redirect($this->generateUrl('biblio_general_messagecontact'));
+    }
+
 }
