@@ -19,11 +19,12 @@ class User extends BaseUser
      */
     protected $id;
 
-    /*public function __construct()
+    public function __construct()
     {
         parent::__construct();
+		$this->emprunts = new \Doctrine\Common\Collections\ArrayCollection();
         // your own logic
-    }*/
+    }
 	
 	
      
@@ -243,14 +244,6 @@ class User extends BaseUser
     public function getTel()
     {
         return $this->tel;
-    }
-   
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->emprunts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
