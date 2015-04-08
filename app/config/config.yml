@@ -66,11 +66,10 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
-    spool:     { type: memory }
+    transport: gmail
+    host:      gmail.com
+    username:  iut.bibliotheque
+    password:  projet2015
 
 
 # app/config/config.yml
@@ -78,6 +77,20 @@ fos_user:
     db_driver:     orm
     firewall_name: main
     user_class:    Biblio\UserBundle\Entity\User
+    service:
+        mailer: fos_user.mailer.twig_swift
     registration:
         form:
             type: biblio_user_registration
+        confirmation:
+            enabled: true
+            from_email:
+                address:        registration@acmedemo.com
+                sender_name:    Enregistrement Bibliothèque
+            template: BiblioGeneralBundle:Default:registration.email.twig
+    resetting:
+        email:
+            from_email:
+                address:        resetting@acmedemo.com
+                sender_name:    Mot de passe oublié : Bibliothèque
+            template: BiblioGeneralBundle:Default:resetting.email.twig

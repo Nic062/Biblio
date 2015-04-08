@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table(name="users")
  */
+
 class User extends BaseUser
 {
     /**
@@ -244,5 +245,15 @@ class User extends BaseUser
     {
         return $this->tel;
     }
-   
+	
+	public function setEmail($email){
+		$this->email = $email;
+		$this->username = $email;
+	}
+
+	public function setEmailCanonical($emailCanonical){
+		$this->emailCanonical = $emailCanonical;
+		$this->usernameCanonical = $emailCanonical;
+	}
+	
 }

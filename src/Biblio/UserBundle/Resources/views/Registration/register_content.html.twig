@@ -1,33 +1,98 @@
 {% trans_default_domain 'FOSUserBundle' %}
+{% block body %}
+<br />
+{% if form_errors(form.email) or form_errors(form.plainPassword.first)  %}
+<div class="alert alert-danger" role="alert">
+<a href="#" class="close" data-dismiss="alert">&times;</a>
+{{ form_errors(form.email) }}
+{{ form_errors(form.plainPassword.first) }}
+</div>
+{% endif %}
+<h3>Nouveau client : </h3>
 
+
+<div class="well">
+	{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
 		
-		<label>Adresse Mail</label>
-		<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-			{{ form_widget(form.email, {'attr': {'class':'form-control', 'placeholder' : 'Adresse mail' }}) }}
+		
+		<div class="form-group">
+			{{ form_label(form.prenom, "Prénom", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-4">
+				{{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+			</div>
 		</div>
 		
-		<label>Nom d'utilisateur</label>
-		<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-user"></i></span>
-			{{ form_widget(form.username, {'attr': {'class':'form-control', 'placeholder' : 'Nom d\'utilisateur' }}) }}
+		<div class="form-group">
+			{{ form_label(form.nom, "Nom", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-4">
+				{{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+			</div>
 		</div>
 		
-		<label>Mot de passe</label>
-		<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-			{{ form_widget(form.plainPassword.first, {'attr': {'class':'form-control', 'placeholder' : 'Mot de passe' }}) }}
+		<div class="form-group">
+			{{ form_label(form.naissance, "Naissance", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-4">
+				{{ form_widget(form.naissance) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.rue, "Rue", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-4">
+				{{ form_widget(form.rue, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.ville, "Ville", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-4">
+				{{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.cp, "Code postal", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-4">
+				{{ form_widget(form.cp, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.email, "E-mail", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-4">
+				{{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.tel, "Téléphone", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-4">
+				{{ form_widget(form.tel, {'attr': {'class': 'form-control'}}) }}
+			</div>
 		</div>
 		
-		<label>Confirmation du mot de passe</label>
-		<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-			{{ form_widget(form.plainPassword.second, {'attr': {'class':'form-control', 'placeholder' : 'Confirmation du mot de passe' }}) }}
+		<div class="form-group">
+			{{ form_label(form.plainPassword.first, "Mot de passe", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-4">
+				{{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+			</div>
 		</div>
+		
+		<div class="form-group">
+			{{ form_label(form.plainPassword.second, "Confirmation du mot de passe", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-4">
+				{{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		
 		<br />
     {{ form_widget(form) }}
     <div>
         <input type="submit" class="btn btn-block btn-success" value="{{ 'registration.submit'|trans }}" />
     </div><br />
 </form>
+  {{ form_end(form) }}
+
+</div>
+{% endblock %}

@@ -3,7 +3,15 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-<p>
-{{ 'resetting.check_email'|trans({'%email%': email}) }}
-</p>
+<br />
+<div class="well">
+	<br />
+	<div class="alert alert-info" role="alert">
+		<p>
+		{{ 'resetting.check_email'|trans({'%email%': email}) }}
+		</p>
+		<a class="btn btn-default" href="{{ app.request.getBasePath() }}" role="button">Retour à l'acceuil</a>
+
+	</div>
+</div>
 {% endblock %}

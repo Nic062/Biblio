@@ -18,6 +18,7 @@ class RegistrationFormType extends AbstractType
 		$builder->add('cp',      'text');
 		$builder->add('email',      'email');
 		$builder->add('tel',      'text');
+		$builder->remove('username');
 	}
 
     public function getParent()
