@@ -32,8 +32,13 @@
 				</tr>
 			{% endfor %}
 		{% endif %}
+		
 	</tbody>
 	</table>
+	
 </div>
+
+
+	<h4><a href="{{ path('biblio_general_setabonnementuser',{ 'id':member.id }) }}">Ce membre a payé et peut devenir abonné !</a></h4>
 
 {% endblock %}

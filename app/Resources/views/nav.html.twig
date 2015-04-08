@@ -75,14 +75,13 @@
            <ul class="nav navbar-nav">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mon compte <span class="caret"></span></a>
-              {#<ul class="dropdown-menu" role="menu">
-                <li><a href="{{ path('biblio_general_showusers') }}">Liste des membres</a></li>
+              <ul class="dropdown-menu" role="menu">
                 <li><a href="{{ path('biblio_general_showautors') }}">Liste des auteurs</a></li>
                 <li><a href="{{ path('biblio_general_showtypeslivre') }}">Liste des types de livre</a></li>
                 <li><a href="{{ path('biblio_general_showlivres') }}">Liste des livres</a></li>
                 <li><a href="{{ path('biblio_general_showeditions') }}">Liste des éditeurs</a></li>
-                <li><a href="{{ path('biblio_general_showemprunts') }}">Liste des emprunts</a></li>
-              </ul>#}
+				<li><a href="{{ path('biblio_general_abonnement') }}">S'abonner !</a></li>
+              </ul>
             </li>
           </ul>
            <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
