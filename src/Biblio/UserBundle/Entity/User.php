@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class User extends BaseUser
 {
+	
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -27,6 +28,48 @@ class User extends BaseUser
         // your own logic
     }
 	
+	    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Add emprunts
+     *
+     * @param \Biblio\GeneralBundle\Entity\Emprunt $emprunts
+     * @return User
+     */
+    public function addEmprunt(\Biblio\GeneralBundle\Entity\Emprunt $emprunts)
+    {
+        $this->emprunts[] = $emprunts;
+
+        return $this;
+    }
+
+    /**
+     * Remove emprunts
+     *
+     * @param \Biblio\GeneralBundle\Entity\Emprunt $emprunts
+     */
+    public function removeEmprunt(\Biblio\GeneralBundle\Entity\Emprunt $emprunts)
+    {
+        $this->emprunts->removeElement($emprunts);
+    }
+
+    /**
+     * Get emprunts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEmprunts()
+    {
+        return $this->emprunts;
+    }
 	
      
     /**
@@ -246,7 +289,6 @@ class User extends BaseUser
     {
         return $this->tel;
     }
-<<<<<<< HEAD
 	
 	public function setEmail($email){
 		$this->email = $email;
@@ -259,49 +301,3 @@ class User extends BaseUser
 	}
 	
 }
-=======
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Add emprunts
-     *
-     * @param \Biblio\GeneralBundle\Entity\Emprunt $emprunts
-     * @return User
-     */
-    public function addEmprunt(\Biblio\GeneralBundle\Entity\Emprunt $emprunts)
-    {
-        $this->emprunts[] = $emprunts;
-
-        return $this;
-    }
-
-    /**
-     * Remove emprunts
-     *
-     * @param \Biblio\GeneralBundle\Entity\Emprunt $emprunts
-     */
-    public function removeEmprunt(\Biblio\GeneralBundle\Entity\Emprunt $emprunts)
-    {
-        $this->emprunts->removeElement($emprunts);
-    }
-
-    /**
-     * Get emprunts
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getEmprunts()
-    {
-        return $this->emprunts;
-    }
-}
->>>>>>> origin/master
