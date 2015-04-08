@@ -16,6 +16,25 @@ use Biblio\GeneralBundle\Entity\MessageContact;
 
 class DefaultController extends Controller
 {
+
+	public function navAction()
+    {   	
+    	$nb=0;
+
+    	$m = $this->getDoctrine()->getManager();
+    	$listeM = $m->getRepository('BiblioGeneralBundle:MessageContact')->findAll();
+
+    	foreach ($listeM as $msg) {
+    		if($msg->getLu()==0){
+    			$nb=$nb+1;
+    		}
+    	}
+
+        return $this->render('::nav.html.twig', array(
+        	'nb'=>$nb
+        ));
+    }
+	
     public function indexAction()
     {
     	$em = $this->getDoctrine()->getManager();
@@ -770,6 +789,8 @@ class DefaultController extends Controller
 
 		$msg = new MessageContact();
 
+		$msg->setLu(0);
+
 		$form = $this->get('form.factory')->createBuilder('form', $msg)
 			
 			->add('nom',     'text')
@@ -818,7 +839,13 @@ class DefaultController extends Controller
 		
 		$m = $this->getDoctrine()->getManager();
 		$message = $m->getRepository('BiblioGeneralBundle:MessageContact')->find($id);
-		
+
+		$message->setLu(1);
+
+		$m = $this->getDoctrine()->getManager();
+		$m->persist($message);
+		$m->flush();
+
 		if (null === $message) {
 		  throw new NotFoundHttpException("Le message d'id ".$id." n'existe pas.");
 		}
@@ -845,6 +872,7 @@ class DefaultController extends Controller
 		
 		return $this->redirect($this->generateUrl('biblio_general_messagecontact'));
     }
+
 	
 	public function abonnementAction()
     {

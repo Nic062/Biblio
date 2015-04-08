@@ -47,6 +47,13 @@ class MessageContact
      */
     private $message;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="lu", type="boolean")
+     */
+    private $lu;
+
 
     /**
      * Get id
@@ -148,5 +155,28 @@ class MessageContact
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * Set lu
+     *
+     * @param boolean $lu
+     * @return MessageContact
+     */
+    public function setLu($lu)
+    {
+        $this->lu = $lu;
+
+        return $this;
+    }
+
+    /**
+     * Get lu
+     *
+     * @return boolean 
+     */
+    public function getLu()
+    {
+        return $this->lu;
     }
 }
