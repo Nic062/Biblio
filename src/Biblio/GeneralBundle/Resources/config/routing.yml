@@ -128,3 +128,14 @@ biblio_general_messagecontact:
 biblio_general_showmessagecontact:
     path:    /showmessagecontact/{id}
     defaults: { _controller: BiblioGeneralBundle:Default:showmessagecontact }
+
+biblio_general_deletemessagecontact:
+    path:   /deletemessagecontact/{id}
+    defaults: {_controller: BiblioGeneralBundle:Default:deletemessagecontact}
+
+biblio_general_abonnement:
+    path:    /abonnement
+    defaults: { _controller: BiblioGeneralBundle:Default:abonnement }
+biblio_general_setabonnementuser:
+    path:    /setabonnementuser/{id}
+    defaults: { _controller: BiblioGeneralBundle:Default:setabonnementuser }

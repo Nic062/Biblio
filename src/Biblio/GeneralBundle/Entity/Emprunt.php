@@ -36,7 +36,7 @@ class Emprunt
     private $delais;
 	
 	/**
-	* @ORM\ManyToOne(targetEntity="Biblio\GeneralBundle\Entity\Inscrit", inversedBy="emprunts")
+	* @ORM\ManyToOne(targetEntity="Biblio\UserBundle\Entity\User", inversedBy="emprunts")
 	* @ORM\JoinColumn(nullable=false)
 	*/
 	private $inscrit;
@@ -111,10 +111,10 @@ class Emprunt
     /**
      * Set inscrit
      *
-     * @param \Biblio\GeneralBundle\Entity\Inscrit $inscrit
+     * @param \Biblio\UserBundle\Entity\User $inscrit
      * @return Emprunt
      */
-    public function setInscrit(\Biblio\GeneralBundle\Entity\Inscrit $inscrit)
+    public function setInscrit(\Biblio\UserBundle\Entity\User $inscrit)
     {
         $this->inscrit = $inscrit;
     
@@ -124,7 +124,7 @@ class Emprunt
     /**
      * Get inscrit
      *
-     * @return \Biblio\GeneralBundle\Entity\Inscrit 
+     * @return \Biblio\UserBundle\Entity\User
      */
     public function getInscrit()
     {

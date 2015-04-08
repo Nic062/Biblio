@@ -15,10 +15,12 @@
 		<thead>
 	        <tr class="filters">
 	            <th><input type="text" class="form-control" placeholder="##" disabled></th>
+	            <th><input type="text" class="form-control" placeholder="Lu" disabled></th>
 	            <th><input type="text" class="form-control" placeholder="Nom" disabled></th>
 	            <th><input type="text" class="form-control" placeholder="Prénom" disabled></th>
 	            <th><input type="text" class="form-control" placeholder="Email" disabled></th>
 	            <th><input type="text" class="form-control" placeholder="Message" disabled></th>
+	            <th>Supprimer</th>
 	        </tr>
 	    </thead>
 		<tbody>
@@ -26,10 +28,18 @@
 				{% for msg in listMsg %}
 					<tr>
 						<td><b><a href="{{ path('biblio_general_showmessagecontact',{ 'id':msg.id }) }}}">{{ msg.id }}</a></b></td>
+						<td>
+							{% if msg.lu != 0 %}
+								<span class="glyphicon glyphicon-ok"></span>
+							{% else %}
+								<span class="glyphicon glyphicon-envelope"></span>
+							{% endif %}
+						</td>
 						<td>{{ msg.nom }}</td>
 						<td>{{ msg.prenom }}</td>
 						<td>{{ msg.email }}</td>
 						<td>{{ msg.message | slice(0, 20)}}</td>
+						<td><b><a href="{{ path('biblio_general_deletemessagecontact',{ 'id':msg.id }) }}}">Supprimer</a></b></td>
 					</tr>
 				{% endfor %}
 			{% endif %}

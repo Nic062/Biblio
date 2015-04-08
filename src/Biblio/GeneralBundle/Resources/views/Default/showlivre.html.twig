@@ -37,7 +37,7 @@
 				<tr>
 					<td><b>{{ ex.id }}</b></td>
 					<td>{{ ex.edition.nom }}</td>
-					<td><b><a href="{{ path('biblio_general_addemprunt',{ 'idUser':128, 'idExemplaire':ex.id }) }}}">Emprunter !</a></b></td>
+					<td><b><a href="{{ path('biblio_general_addemprunt',{ 'idUser':app.user.id, 'idExemplaire':ex.id }) }}}">Emprunter !</a></b></td>
 					<th><a href="{{ path('biblio_general_editexemplaire',{ 'id':ex.id }) }}}">Editer</a></th>
 					<th><a href="{{ path('biblio_general_deleteexemplaire',{ 'id':ex.id }) }}}">Supprimer</a></th>
 				</tr>

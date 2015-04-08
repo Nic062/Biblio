@@ -36,7 +36,7 @@ class Emprunt
     private $delais;
 	
 	/**
-	* @ORM\ManyToOne(targetEntity="Biblio\GeneralBundle\Entity\Inscrit", inversedBy="emprunts")
+	* @ORM\ManyToOne(targetEntity="Biblio\UserBundle\Entity\User", inversedBy="emprunts")
 	* @ORM\JoinColumn(nullable=false)
 	*/
 	private $inscrit;
@@ -46,7 +46,11 @@ class Emprunt
 	* @ORM\JoinColumn(nullable=false)
 	*/
 	private $exemplaire;
-
+	
+	
+	public function __construct(){
+		$this->date = new \Datetime();
+	}
 
     /**
      * Get id

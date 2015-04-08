@@ -9,13 +9,32 @@ use Biblio\GeneralBundle\Entity\Livre;
 use Biblio\GeneralBundle\Entity\Exemplaire;
 use Biblio\GeneralBundle\Entity\Emprunt;
 use Biblio\GeneralBundle\Entity\Auteur;
-use Biblio\GeneralBundle\Entity\Inscrit;
+use Biblio\UserBundle\Entity\User;
 use Biblio\GeneralBundle\Entity\Edition;
 use Biblio\GeneralBundle\Entity\News;
 use Biblio\GeneralBundle\Entity\MessageContact;
 
 class DefaultController extends Controller
 {
+
+	public function navAction()
+    {   	
+    	$nb=0;
+
+    	$m = $this->getDoctrine()->getManager();
+    	$listeM = $m->getRepository('BiblioGeneralBundle:MessageContact')->findAll();
+
+    	foreach ($listeM as $msg) {
+    		if($msg->getLu()==0){
+    			$nb=$nb+1;
+    		}
+    	}
+
+        return $this->render('::nav.html.twig', array(
+        	'nb'=>$nb
+        ));
+    }
+	
     public function indexAction()
     {
     	$em = $this->getDoctrine()->getManager();
@@ -31,7 +50,7 @@ class DefaultController extends Controller
 	
 	public function adduserAction(Request $request){
 	
-		$user = new Inscrit();
+		$user = new User();
 
 		$form = $this->get('form.factory')->createBuilder('form', $user)
 			->add('nom',     'text')
@@ -68,7 +87,7 @@ class DefaultController extends Controller
 	public function edituserAction($id, Request $request){
 	
 		$em = $this->getDoctrine()->getManager();
-		$user = $em->getRepository('BiblioGeneralBundle:Inscrit')->find($id);
+		$user = $em->getRepository('BiblioUserBundle:User')->find($id);
 
 		$form = $this->get('form.factory')->createBuilder('form', $user)
 			->add('nom',     'text')
@@ -107,7 +126,7 @@ class DefaultController extends Controller
     {
 		
 		$em = $this->getDoctrine()->getManager();
-		$member = $em->getRepository('BiblioGeneralBundle:Inscrit')->find($id);
+		$member = $em->getRepository('BiblioUserBundle:User')->find($id);
 		
 		if (null === $member) {
 		  throw new NotFoundHttpException("Le membre d'id ".$id." n'existe pas.");
@@ -123,7 +142,7 @@ class DefaultController extends Controller
     {
 		
 		$em = $this->getDoctrine()->getManager();
-		$listMembers = $em->getRepository('BiblioGeneralBundle:Inscrit')->findAll();
+		$listMembers = $em->getRepository('BiblioUserBundle:User')->findAll();
 		
 		return $this->render('BiblioGeneralBundle:Default:showusers.html.twig', array(
 			'listMembers'           => $listMembers
@@ -134,7 +153,7 @@ class DefaultController extends Controller
     {
 		
 		$em = $this->getDoctrine()->getManager();
-		$member = $em->getRepository('BiblioGeneralBundle:Inscrit')->find($id);
+		$member = $em->getRepository('BiblioUserBundle:User')->find($id);
 		
 		if (null === $member) {
 		  throw new NotFoundHttpException("Le membre d'id ".$id." n'existe pas.");
@@ -632,12 +651,12 @@ class DefaultController extends Controller
 	
 	
 
-	public function addempruntAction($idUser=128, $idExemplaire){
+	public function addempruntAction($idUser, $idExemplaire){
 	
 		$emprunt = new Emprunt();
 		
 		$em = $this->getDoctrine()->getManager();
-		$user = $em->getRepository('BiblioGeneralBundle:Inscrit')->find($idUser);
+		$user = $em->getRepository('BiblioUserBundle:User')->find($idUser);
 		$exemplaire = $em->getRepository('BiblioGeneralBundle:Exemplaire')->find($idExemplaire);
 		
 		if (null === $user) {
@@ -649,7 +668,14 @@ class DefaultController extends Controller
 		
 		$emprunt->setInscrit($user);
 		$emprunt->setExemplaire($exemplaire);
-		$emprunt->setDelais(30);
+		
+		$securityContext = $this->container->get('security.context');
+		if ($securityContext->isGranted('ROLE_ABONNE')) {
+			$emprunt->setDelais(28);
+		}else{
+			$emprunt->setDelais(14);
+		}
+		
 		$em->persist($emprunt);
 		$em->flush();
 		
@@ -763,6 +789,8 @@ class DefaultController extends Controller
 
 		$msg = new MessageContact();
 
+		$msg->setLu(0);
+
 		$form = $this->get('form.factory')->createBuilder('form', $msg)
 			
 			->add('nom',     'text')
@@ -811,7 +839,13 @@ class DefaultController extends Controller
 		
 		$m = $this->getDoctrine()->getManager();
 		$message = $m->getRepository('BiblioGeneralBundle:MessageContact')->find($id);
-		
+
+		$message->setLu(1);
+
+		$m = $this->getDoctrine()->getManager();
+		$m->persist($message);
+		$m->flush();
+
 		if (null === $message) {
 		  throw new NotFoundHttpException("Le message d'id ".$id." n'existe pas.");
 		}
@@ -823,4 +857,41 @@ class DefaultController extends Controller
 
     }
 
+    public function deletemessagecontactAction($id)
+    {
+		
+		$m = $this->getDoctrine()->getManager();
+		$message = $m->getRepository('BiblioGeneralBundle:MessageContact')->find($id);
+		
+		if (null === $message) {
+		  throw new NotFoundHttpException("Le message d'id ".$id." n'existe pas.");
+		}
+		
+		$m->remove($message);
+		$m->flush();
+		
+		return $this->redirect($this->generateUrl('biblio_general_messagecontact'));
+    }
+
+	
+	public function abonnementAction()
+    {
+		
+		return $this->render('BiblioGeneralBundle:Default:abonnement.html.twig');
+    }
+
+	public function setabonnementuserAction($id)
+    {
+		
+		$em = $this->getDoctrine()->getManager();
+		$user = $em->getRepository('BiblioUserBundle:User')->find($id);
+		
+		$user->addRole("ROLE_ABONNE");
+		$em->persist($user);
+		$em->flush();
+		
+		return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $user->getId())));
+    }
+
+	
 }
