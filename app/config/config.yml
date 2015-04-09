@@ -70,6 +70,7 @@ swiftmailer:
     host:      gmail.com
     username:  iut.bibliotheque
     password:  projet2015
+    delivery_address:  iut.bibliotheque@gmail.com
 
 
 # app/config/config.yml

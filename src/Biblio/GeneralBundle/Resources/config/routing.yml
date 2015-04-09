@@ -139,3 +139,6 @@ biblio_general_abonnement:
 biblio_general_setabonnementuser:
     path:    /setabonnementuser/{id}
     defaults: { _controller: BiblioGeneralBundle:Default:setabonnementuser }
+biblio_general_rappel:
+    path:    /envoiemail
+    defaults: { _controller: BiblioGeneralBundle:Default:rappel }

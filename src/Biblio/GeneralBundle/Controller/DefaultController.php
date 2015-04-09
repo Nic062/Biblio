@@ -73,7 +73,7 @@ class DefaultController extends Controller
 			$em->persist($user);
 			$em->flush();
 
-			$request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+			$request->getSession()->getFlashBag()->add('notice', 'Client bien enregistré.');
 
 			return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $user->getId())));
 		}
@@ -891,6 +891,32 @@ class DefaultController extends Controller
 		$em->flush();
 		
 		return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $user->getId())));
+    }
+
+    public function rappelAction() {
+    	$em = $this->getDoctrine()->getManager();
+    	$listeEmprunts = $em->getRepository('BiblioGeneralBundle:Emprunt')->findAll();
+
+    	foreach ($listeEmprunts as $emprunt) {
+    		if(($emprunt->getDelais() - date_diff(new \DateTime("now"), $emprunt->getDate())->d) <= 0) {
+    			$livre = $emprunt->getExemplaire()->getLivre();
+    			$user = $emprunt->getInscrit();
+
+    			$message = \Swift_Message::newInstance()
+			        ->setSubject('Rappel pour votre emprunt à la bibliothèque')
+			        ->setFrom('iut.bibliotheque@gmail.com')
+			        ->setTo($emprunt->getInscrit()->getEmail())
+			        ->setBody($this->renderView('BiblioGeneralBundle:Default:mail.txt.twig', array(
+			        	'livre' => $livre,
+			        	'user' => $user,
+			        	'emprunt' => $emprunt
+			        )))
+			    ;
+			    $this->get('mailer')->send($message);
+    		}
+    	}
+
+    	return $this->redirect($this->generateUrl('biblio_general_showemprunts'));
     }
 
 	

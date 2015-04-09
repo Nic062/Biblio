@@ -24,7 +24,7 @@ class Livre
 	/**
      * @var string
      *
-     * @ORM\Column(name="isbn", type="string", length=13)
+     * @ORM\Column(name="isbn", type="string", length=13, nullable=true)
      */
     private $isbn;
 
