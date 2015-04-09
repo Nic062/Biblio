@@ -1,7 +1,7 @@
 body{
 	background-image: url(../imgs/background.jpg);
-	-webkit-background-size: cover; /* pour anciens Chrome et Safari */
-	background-size: cover; /* version standardisée */
+	/*-webkit-background-size: cover;  pour anciens Chrome et Safari */
+	background-size: cover;  /*version standardisée */
 	
 }
 
