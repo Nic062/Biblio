@@ -1,6 +1,5 @@
 function generatePassworda(){
     var password = Math.random().toString(36).slice(-10);
-    alert(password)
     document.getElementById('fos_user_registration_form_plainPassword_first').value=password;
     document.getElementById('fos_user_registration_form_plainPassword_second').value=password;
 }   

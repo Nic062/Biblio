@@ -8,6 +8,7 @@
 	<br />
 	<div class="alert alert-info" role="alert">
 		<p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
+		<a class="btn btn-default" href="{{ app.request.getBasePath() }}" role="button">Retour à l'acceuil</a>
 	</div>
 </div>
 {% endblock fos_user_content %}

@@ -3,5 +3,10 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>  
+<div class="well">
+	<br />
+	<div class="alert alert-info" role="alert">
+		<p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p> 
+	</div>
+</div>
 {% endblock fos_user_content %}
