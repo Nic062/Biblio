@@ -1,37 +1,41 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}{% endblock %} - Bibliothèque</title>
-        {% block stylesheets %}
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
-        {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block nav %}{{ render(controller('BiblioGeneralBundle:Default:nav')) }}{% endblock %}
-        <div class="container" style="background-color:white;border-radius:5px;padding:10px;">
-		
-		{% for label, flashes in app.session.flashbag.all %}
-			{% for flash in flashes %}
-				<div class="alert alert-{{ label }} alert-dismissible fade in" role="alert">
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-				  {{ flash }}
-				</div>
+{% if app.user is null or not is_granted("ROLE_BAN") %}	
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8" />
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<title>{% block title %}{% endblock %} - Bibliothèque</title>
+			{% block stylesheets %}
+			<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+			<link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
+			<link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+			{% endblock %}
+			<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+		</head>
+		<body>
+			{% block nav %}{{ render(controller('BiblioGeneralBundle:Default:nav')) }}{% endblock %}
+			<div class="container" style="background-color:white;border-radius:5px;padding:10px;">
+			
+			{% for label, flashes in app.session.flashbag.all %}
+				{% for flash in flashes %}
+					<div class="alert alert-{{ label }} alert-dismissible fade in" role="alert">
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+					  {{ flash }}
+					</div>
+				{% endfor %}
 			{% endfor %}
-		{% endfor %}
-		
-        {% block body %}{% endblock %}
-        </div>
-        {% block javascripts %}
-        <script src="{{ asset('js/jquery-2.1.3.min.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+			
+			{% block body %}{% endblock %}
+			</div>
+			{% block javascripts %}
+			<script src="{{ asset('js/jquery-2.1.3.min.js') }}"></script>
+			<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
-         <script src="{{ asset('js/recherche.js') }}"></script>
-        {% endblock %}
-        
-    </body>
-</html>
+			 <script src="{{ asset('js/recherche.js') }}"></script>
+			{% endblock %}
+			
+		</body>
+	</html>
+{% else %}	
+	<h1>Vous avez été banni par un administrateur de la bibliothèque :(</h1>
+{% endif %}

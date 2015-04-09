@@ -1017,6 +1017,5 @@ class DefaultController extends Controller
 
     	return $this->redirect($this->generateUrl('biblio_general_showemprunts'));
     }
-
 	
 }
