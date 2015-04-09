@@ -946,7 +946,8 @@ class DefaultController extends Controller
     	$listeEmprunts = $em->getRepository('BiblioGeneralBundle:Emprunt')->findAll();
 
     	foreach ($listeEmprunts as $emprunt) {
-    		if(($emprunt->getDelais() - date_diff(new \DateTime("now"), $emprunt->getDate())->d) <= 0) {
+    		$joursRestant = ($emprunt->getDelais() - date_diff(new \DateTime("now"), $emprunt->getDate())->d);
+    		if($joursRestant <= 0 && $joursRestant >- 10) {
     			$livre = $emprunt->getExemplaire()->getLivre();
     			$user = $emprunt->getInscrit();
 
@@ -955,6 +956,26 @@ class DefaultController extends Controller
 			        ->setFrom('iut.bibliotheque@gmail.com')
 			        ->setTo($emprunt->getInscrit()->getEmail())
 			        ->setBody($this->renderView('BiblioGeneralBundle:Default:mail.txt.twig', array(
+			        	'livre' => $livre,
+			        	'user' => $user,
+			        	'emprunt' => $emprunt
+			        )))
+			    ;
+			    $this->get('mailer')->send($message);
+    		}
+
+    		if($joursRestant <= -10) {
+    			$livre = $emprunt->getExemplaire()->getLivre();
+    			$user = $em->getRepository('BiblioUserBundle:User')->find($emprunt->getInscrit()->getId());
+    			$user->addRole("ROLE_BAN");
+    			$em->persist($user);
+    			$em->flush();
+
+    			$message = \Swift_Message::newInstance()
+			        ->setSubject('Suspension de votre abonnement')
+			        ->setFrom('iut.bibliotheque@gmail.com')
+			        ->setTo($emprunt->getInscrit()->getEmail())
+			        ->setBody($this->renderView('BiblioGeneralBundle:Default:mailSuspension.txt.twig', array(
 			        	'livre' => $livre,
 			        	'user' => $user,
 			        	'emprunt' => $emprunt
