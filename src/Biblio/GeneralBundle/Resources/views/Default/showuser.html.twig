@@ -5,10 +5,12 @@
 <div class="alert alert-success">
 	<p><span class="glyphicon glyphicon-user" style="font-size:50px;margin-right:20px;"></span> Bonjour, je m'appelle <b>{{member.prenom}} {{member.nom}}</b>, j'habite à <b>{{member.ville}}</b> et j'ai <b>{{"now"|date('Y') - member.naissance|date('Y')}}</b> ans ! Je suis passionné de lecture.</p>
 	<center style="padding:50px">
-		{% if is_granted("ROLE_ADMIN")  %}
+		{% if member.hasrole("ROLE_ADMIN")  %}
 			<b>Je suis un administrateur et fier de l'être !</b>
-		{% elseif is_granted("ROLE_ABONNE")  %}
+		{% elseif member.hasrole("ROLE_ABONNE")  %}
 			<b>Je suis un fidèle abonné !</b>
+		{% elseif member.hasrole("ROLE_BAN")  %}
+			<b>Je suis un membre déchu... (utilisateur banni)</b>
 		{% else %}
 			<b>Je ne suis qu'un simple terrien... (utilisateur gratuit)</b>
 		{% endif %}
@@ -50,6 +52,9 @@
 </div>
 
 {% if is_granted("ROLE_ADMIN")  %}
-	<center><a href="{{ path('biblio_general_setabonnementuser',{ 'id':member.id }) }}"><button class="btn btn-primary">Ce membre a payé ? Il peut devenir abonné !</button></a></center>
+	<center style="margin:10px;"><a href="{{ path('biblio_general_setabonnementuser',{ 'id':member.id }) }}"><button class="btn btn-primary">Ce membre a payé ? Il peut devenir abonné !</button></a></center>
+	<center style="margin:10px;"><a href="{{ path('biblio_general_setadminuser',{ 'id':member.id }) }}"><button class="btn btn-primary">Ou mieux, il peut devenir administrateur !</button></a></center>
+	<center style="margin:10px;"><a href="{{ path('biblio_general_setuser',{ 'id':member.id }) }}"><button class="btn btn-primary">Ou moins bien, redevenir membre...</button></a></center>
+	<center style="margin:10px;"><a href="{{ path('biblio_general_setbanuser',{ 'id':member.id }) }}"><button class="btn btn-primary">Ou pire, le bannir !</button></a></center>
 {% endif %}
 {% endblock %}

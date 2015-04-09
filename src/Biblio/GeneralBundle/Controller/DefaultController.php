@@ -901,6 +901,45 @@ class DefaultController extends Controller
 		
 		return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $user->getId())));
     }
+	
+	public function setadminuserAction($id)
+    {
+		
+		$em = $this->getDoctrine()->getManager();
+		$user = $em->getRepository('BiblioUserBundle:User')->find($id);
+		
+		$user->addRole("ROLE_ADMIN");
+		$em->persist($user);
+		$em->flush();
+		
+		return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $user->getId())));
+    }
+	
+	public function setbanuserAction($id)
+    {
+		
+		$em = $this->getDoctrine()->getManager();
+		$user = $em->getRepository('BiblioUserBundle:User')->find($id);
+		
+		$user->addRole("ROLE_BAN");
+		$em->persist($user);
+		$em->flush();
+		
+		return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $user->getId())));
+    }
+	
+	public function setuserAction($id)
+    {
+		
+		$em = $this->getDoctrine()->getManager();
+		$user = $em->getRepository('BiblioUserBundle:User')->find($id);
+		
+		$user->addRole("ROLE_USER");
+		$em->persist($user);
+		$em->flush();
+		
+		return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $user->getId())));
+    }
 
     public function rappelAction() {
     	$em = $this->getDoctrine()->getManager();

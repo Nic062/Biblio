@@ -300,4 +300,10 @@ class User extends BaseUser
 		$this->usernameCanonical = $emailCanonical;
 	}
 	
+	public function addRole($role){
+	
+		$this->roles=array($role);
+	
+	}
+	
 }
