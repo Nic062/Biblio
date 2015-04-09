@@ -1,17 +1,19 @@
 {% extends '::base.html.twig' %}
 {% block title %}{{livre.titre}}{% endblock %}
 {% block body %}
+<div class="alert alert-success">
+	<center><span class="glyphicon glyphicon-book" style="font-size:50px;margin-right:20px;"></span></center>
+	<p><b>{{livre.titre}}</b> est un livre écrit en <b>{{livre.annee}}</b> par 
 
-<p><b>{{livre.titre}}</b> est un livre écrit en <b>{{livre.annee}}</b> par 
+	<b>{% if livre.auteurs is not empty %}
+		{% for auteur in livre.auteurs %}
+		  {{ auteur.prenom }} {{ auteur.nom }}{% if not loop.last %}, {% endif %}
+		{% endfor %}
+	{% endif %}</b>
 
-<b>{% if livre.auteurs is not empty %}
-    {% for auteur in livre.auteurs %}
-      {{ auteur.prenom }} {{ auteur.nom }}{% if not loop.last %}, {% endif %}
-    {% endfor %}
-{% endif %}</b>
-
-, dont voici le résumé : </p>
-<p>{{livre.resume}}</p>
+	, dont voici le résumé : </p>
+	<p>{{livre.resume}}</p>
+</div>
 
 <div class="panel panel-primary filterable">
             <div class="panel-heading">
@@ -27,8 +29,10 @@
 	            <th><input type="text" class="form-control" placeholder="##" disabled></th>
 	            <th><input type="text" class="form-control" placeholder="Edition" disabled></th>
 	            <th>Disponibilité</th>
-	            <th>Modifier</th>
-				<th>Supprimer</th>
+				{% if is_granted("ROLE_ADMIN")  %}
+					<th>Modifier</th>
+					<th>Supprimer</th>
+				{% endif %}
 	        </tr>
 	    </thead>
 		<tbody>
@@ -37,9 +41,15 @@
 				<tr>
 					<td><b>{{ ex.id }}</b></td>
 					<td>{{ ex.edition.nom }}</td>
-					<td><b><a href="{{ path('biblio_general_addemprunt',{ 'idUser':app.user.id, 'idExemplaire':ex.id }) }}}">Emprunter !</a></b></td>
-					<th><a href="{{ path('biblio_general_editexemplaire',{ 'id':ex.id }) }}}">Editer</a></th>
-					<th><a href="{{ path('biblio_general_deleteexemplaire',{ 'id':ex.id }) }}}">Supprimer</a></th>
+					{% if ex.emprunt is null  %}
+						<td><b><a href="{{ path('biblio_general_addemprunt',{ 'idUser':app.user.id, 'idExemplaire':ex.id }) }}}">Emprunter !</a></b></td>
+					{% else %}
+						<td>Indisponible...</td>
+					{% endif %}
+					{% if is_granted("ROLE_ADMIN")  %}
+						<th><a href="{{ path('biblio_general_editexemplaire',{ 'id':ex.id }) }}}">Editer</a></th>
+						<th><a href="{{ path('biblio_general_deleteexemplaire',{ 'id':ex.id }) }}}">Supprimer</a></th>
+					{% endif %}
 				</tr>
 			{% endfor %}
 		{% endif %}

@@ -2,8 +2,19 @@
 {% block title %}{{member.prenom}}{% endblock %}
 {% block body %}
 
-<p>Bonjour, je m'appelle <b>{{member.prenom}} {{member.nom}}</b>, j'habite à <b>{{member.ville}}</b> et j'ai <b>{{"now"|date('Y') - member.naissance|date('Y')}}</b> ans ! Je suis passionné de lecture.</p>
-
+<div class="alert alert-success">
+	<p><span class="glyphicon glyphicon-user" style="font-size:50px;margin-right:20px;"></span> Bonjour, je m'appelle <b>{{member.prenom}} {{member.nom}}</b>, j'habite à <b>{{member.ville}}</b> et j'ai <b>{{"now"|date('Y') - member.naissance|date('Y')}}</b> ans ! Je suis passionné de lecture.</p>
+	<center style="padding:50px">
+		{% if is_granted("ROLE_ADMIN")  %}
+			<b>Je suis un administrateur et fier de l'être !</b>
+		{% elseif is_granted("ROLE_ABONNE")  %}
+			<b>Je suis un fidèle abonné !</b>
+		{% else %}
+			<b>Je ne suis qu'un simple terrien... (utilisateur gratuit)</b>
+		{% endif %}
+	</center>
+</div>
+	
 <div class="panel panel-primary filterable">
             <div class="panel-heading">
                 <h3 class="panel-title">Liste des livres emprunté par <b>{{member.prenom}} {{member.nom}}</b></h3>
@@ -38,7 +49,7 @@
 	
 </div>
 
-{% if not is_granted("ROLE_ABONNE")  %}
+{% if is_granted("ROLE_ADMIN")  %}
 	<center><a href="{{ path('biblio_general_setabonnementuser',{ 'id':member.id }) }}"><button class="btn btn-primary">Ce membre a payé ? Il peut devenir abonné !</button></a></center>
 {% endif %}
 {% endblock %}

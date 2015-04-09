@@ -15,8 +15,10 @@
 	        <tr class="filters">
 	            <th><input type="text" class="form-control" placeholder="##" disabled></th>
 	            <th><input type="text" class="form-control" placeholder="Editions" disabled></th>
-	            <th>Modifier</th>
-				<th>Supprimer</th>
+				{% if is_granted("ROLE_ADMIN")  %}
+					<th>Modifier</th>
+					<th>Supprimer</th>
+				{% endif %}
 	        </tr>
 	    </thead>
 		<tbody>
@@ -25,8 +27,10 @@
 					<tr>
 						<td><b><a href="{{ path('biblio_general_showedition',{ 'id':edition.id }) }}}">{{ edition.id }}</a></b></td>
 						<td>{{ edition.nom }}</td>
-						<td><b><a href="{{ path('biblio_general_editedition',{ 'id':edition.id }) }}}">Editer</a></b></td>
-						<td><b><a href="{{ path('biblio_general_deleteedition',{ 'id':edition.id }) }}}">Supprimer</a></b></td>
+						{% if is_granted("ROLE_ADMIN")  %}
+							<td><b><a href="{{ path('biblio_general_editedition',{ 'id':edition.id }) }}}">Editer</a></b></td>
+							<td><b><a href="{{ path('biblio_general_deleteedition',{ 'id':edition.id }) }}}">Supprimer</a></b></td>
+						{% endif %}
 					</tr>
 				{% endfor %}
 			{% endif %}

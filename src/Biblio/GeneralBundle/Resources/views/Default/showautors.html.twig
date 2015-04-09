@@ -17,8 +17,10 @@
 	            <th><input type="text" class="form-control" placeholder="Nom" disabled></th>
 	            <th><input type="text" class="form-control" placeholder="Prénom" disabled></th>
 	            <th><input type="text" class="form-control" placeholder="Date de naissance" disabled></th>
-	            <th>Modifier</th>
-				<th>Supprimer</th>
+				{% if is_granted("ROLE_ADMIN")  %}
+					<th>Modifier</th>
+					<th>Supprimer</th>
+				{% endif %}
 	        </tr>
 	    </thead>
 		<tbody>
@@ -29,8 +31,10 @@
 						<td>{{ autor.nom }}</td>
 						<td>{{ autor.prenom }}</td>
 						<td>{{ autor.naissance|date("d/m/Y") }}</td>
-						<td><b><a href="{{ path('biblio_general_editautor',{ 'id':autor.id }) }}}">Editer</a></b></td>
-						<td><b><a href="{{ path('biblio_general_deleteautor',{ 'id':autor.id }) }}}">Supprimer</a></b></td>
+						{% if is_granted("ROLE_ADMIN")  %}
+							<td><b><a href="{{ path('biblio_general_editautor',{ 'id':autor.id }) }}}">Editer</a></b></td>
+							<td><b><a href="{{ path('biblio_general_deleteautor',{ 'id':autor.id }) }}}">Supprimer</a></b></td>
+						{% endif %}
 					</tr>
 				{% endfor %}
 			{% endif %}

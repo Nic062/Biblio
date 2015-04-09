@@ -2,8 +2,9 @@
 {% block title %}{{autor.nom}}{% endblock %}
 {% block body %}
 
-<p>Bonjour, je m'appelle <b>{{autor.prenom}} {{autor.nom}}</b> et je suis né en <b>{{autor.naissance|date('Y')}}</b> ! Je suis auteur de : </p>
-
+<div class="alert alert-success">
+	<p><span class="glyphicon glyphicon-pencil" style="font-size:50px;margin-right:20px;"></span> Bonjour, je m'appelle <b>{{autor.prenom}} {{autor.nom}}</b> et je suis né en <b>{{autor.naissance|date('Y')}}</b> ! Je suis auteur de : </p>
+</div>
 
 <div class="panel panel-primary filterable">
             <div class="panel-heading">

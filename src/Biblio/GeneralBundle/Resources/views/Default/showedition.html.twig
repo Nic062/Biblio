@@ -2,8 +2,10 @@
 {% block title %}{{edition.nom}}{% endblock %}
 {% block body %}
 
-<p>Bonjour, je suis l'éditeur <b>{{edition.nom}}</b> et j'édite ces livres : </p>
-
+<div class="alert alert-success">
+	<p><span class="glyphicon glyphicon-star" style="font-size:50px;margin-right:20px;"></span>Bonjour, je suis l'éditeur <b>{{edition.nom}}</b> et j'édite ces livres : </p>
+</div>
+	
 <div class="panel panel-primary filterable">
             <div class="panel-heading">
                 <h3 class="panel-title">Liste des livres édités par <b>{{edition.nom}}</b> :</h3>

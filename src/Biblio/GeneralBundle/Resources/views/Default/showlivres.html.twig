@@ -19,8 +19,10 @@
                 <th><input type="text" class="form-control" placeholder="Genre" disabled></th>
                 <th><input type="text" class="form-control" placeholder="Résumé" disabled></th>
                 <th><input type="text" class="form-control" placeholder="ISBN" disabled></th>
-                <th>Modifier</th>
-                <th>Supprimer</th>
+				{% if is_granted("ROLE_ADMIN")  %}
+					<th>Modifier</th>
+					<th>Supprimer</th>
+				{% endif %}
             </tr>
         </thead>
         <tbody>
@@ -40,8 +42,10 @@
 						<td>{{ livre.typeLivre.libelle }}</td>
 						<td>{{ livre.resume | slice(0, 50) }}</td>
 						<td>{{livre.isbn}}</td>
-						<th><a href="{{ path('biblio_general_editlivre',{ 'id':livre.id }) }}}">Editer</a></th>
-						<th><a href="{{ path('biblio_general_deletelivre',{ 'id':livre.id }) }}}">Supprimer</a></th>
+						{% if is_granted("ROLE_ADMIN")  %}
+							<th><a href="{{ path('biblio_general_editlivre',{ 'id':livre.id }) }}}">Editer</a></th>
+							<th><a href="{{ path('biblio_general_deletelivre',{ 'id':livre.id }) }}}">Supprimer</a></th>
+						{% endif %}
 					</tr>
 				{% endfor %}
 			{% endif %}
