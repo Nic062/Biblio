@@ -653,23 +653,32 @@ class DefaultController extends Controller
 
 	public function addempruntAction($idUser, $idExemplaire){
 	
-		$emprunt = new Emprunt();
+		$emprunt = new Emprunt($idUser);
 		
 		$em = $this->getDoctrine()->getManager();
 		$user = $em->getRepository('BiblioUserBundle:User')->find($idUser);
 		$exemplaire = $em->getRepository('BiblioGeneralBundle:Exemplaire')->find($idExemplaire);
+		$securityContext = $this->container->get('security.context');
 		
 		if (null === $user) {
 		  throw new NotFoundHttpException("L'utilisateur d'id ".$idUser." n'existe pas.");
 		}
+		
+		
+		$nb=count($user->getEmprunts());
+		if($nb>=3 && !$securityContext->isGranted('ROLE_ABONNE'))
+			throw new NotFoundHttpException("L'utilisateur d'id ".$idUser." a plus de 3 emprunts");
+		else if($nb>=6)
+			throw new NotFoundHttpException("L'utilisateur d'id ".$idUser." est premium et a plus de 6 emprunts");
+			
+		
 		if (null === $exemplaire) {
 		  throw new NotFoundHttpException("L'exemplaire d'id ".$idExemplaire." n'existe pas.");
 		}
 		
 		$emprunt->setInscrit($user);
 		$emprunt->setExemplaire($exemplaire);
-		
-		$securityContext = $this->container->get('security.context');
+
 		if ($securityContext->isGranted('ROLE_ABONNE')) {
 			$emprunt->setDelais(28);
 		}else{

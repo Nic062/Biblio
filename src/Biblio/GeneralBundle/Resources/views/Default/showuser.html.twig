@@ -38,7 +38,7 @@
 	
 </div>
 
-
-	<h4><a href="{{ path('biblio_general_setabonnementuser',{ 'id':member.id }) }}">Ce membre a payé et peut devenir abonné !</a></h4>
-
+{% if not is_granted("ROLE_ABONNE")  %}
+	<center><a href="{{ path('biblio_general_setabonnementuser',{ 'id':member.id }) }}"><button class="btn btn-primary">Ce membre a payé ? Il peut devenir abonné !</button></a></center>
+{% endif %}
 {% endblock %}
