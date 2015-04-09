@@ -73,7 +73,7 @@ class DefaultController extends Controller
 			$em->persist($user);
 			$em->flush();
 
-			$request->getSession()->getFlashBag()->add('notice', 'Client bien enregistré.');
+			$request->getSession()->getFlashBag()->add('success', 'Client bien enregistré.');
 
 			return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $user->getId())));
 		}
@@ -110,7 +110,7 @@ class DefaultController extends Controller
 			$em->persist($user);
 			$em->flush();
 
-			$request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+			$request->getSession()->getFlashBag()->add('success', 'Annonce bien enregistrée.');
 
 			return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $user->getId())));
 		}
@@ -132,9 +132,15 @@ class DefaultController extends Controller
 		  throw new NotFoundHttpException("Le membre d'id ".$id." n'existe pas.");
 		}
 		
-		$em->remove($member);
-		$em->flush();
+		try{
+			$em->remove($member);
+			$em->flush();
+		}catch(\Exception $e){
+			$this->get('session')->getFlashBag()->add('danger', 'Cet utilisateur a des emprunts en cours... Il ne peut pas être supprimé !');
+			return $this->redirect($this->generateUrl('biblio_general_showusers'));
+		}
 		
+		$this->get('session')->getFlashBag()->add('success', 'L\'utilisateur a bien été supprimé.');
 		return $this->redirect($this->generateUrl('biblio_general_showusers'));
     }
 	
@@ -189,7 +195,7 @@ class DefaultController extends Controller
 			$em->persist($auteur);
 			$em->flush();
 
-			$request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+			$request->getSession()->getFlashBag()->add('success', 'Annonce bien enregistrée.');
 
 			return $this->redirect($this->generateUrl('biblio_general_showautor', array('id' => $auteur->getId())));
 		}
@@ -222,7 +228,7 @@ class DefaultController extends Controller
 			$em->persist($auteur);
 			$em->flush();
 
-			$request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+			$request->getSession()->getFlashBag()->add('success', 'Annonce bien enregistrée.');
 
 			return $this->redirect($this->generateUrl('biblio_general_showautor', array('id' => $auteur->getId())));
 		}
@@ -247,6 +253,7 @@ class DefaultController extends Controller
 		$em->remove($autor);
 		$em->flush();
 		
+		$this->get('session')->getFlashBag()->add('success', 'L\'auteur a bien été supprimé.');
 		return $this->redirect($this->generateUrl('biblio_general_showautors'));
     }
 	
@@ -351,7 +358,7 @@ class DefaultController extends Controller
 			$em->persist($livre);
 			$em->flush();
 
-			$request->getSession()->getFlashBag()->add('notice', 'Livre bien enregistré.');
+			$request->getSession()->getFlashBag()->add('success', 'Livre bien enregistré.');
 
 			return $this->redirect($this->generateUrl('biblio_general_showlivre', array('id' => $livre->getId())));
 		}
@@ -399,7 +406,7 @@ class DefaultController extends Controller
 			$em->persist($livre);
 			$em->flush();
 
-			$request->getSession()->getFlashBag()->add('notice', 'Livre bien enregistré.');
+			$request->getSession()->getFlashBag()->add('success', 'Livre bien enregistré.');
 
 			return $this->redirect($this->generateUrl('biblio_general_showlivre', array('id' => $livre->getId())));
 		}
@@ -421,9 +428,15 @@ class DefaultController extends Controller
 		  throw new NotFoundHttpException("Le livre d'id ".$id." n'existe pas.");
 		}
 		
-		$em->remove($livre);
-		$em->flush();
+		try{
+			$em->remove($livre);
+			$em->flush();
+		}catch(\Exception $e){
+			$this->get('session')->getFlashBag()->add('danger', 'Ce livre possède des liens avec des exemplaires... Il ne peut pas être supprimé !');
+			return $this->redirect($this->generateUrl('biblio_general_showlivres'));
+		}
 		
+		$this->get('session')->getFlashBag()->add('success', 'Le livre a bien été supprimé.');
 		return $this->redirect($this->generateUrl('biblio_general_showlivres'));
     }
 	
@@ -480,7 +493,7 @@ class DefaultController extends Controller
 			$em->persist($exemplaire);
 			$em->flush();
 
-			$request->getSession()->getFlashBag()->add('notice', 'Exemplaire bien enregistré.');
+			$request->getSession()->getFlashBag()->add('success', 'Exemplaire bien enregistré.');
 
 			return $this->redirect($this->generateUrl('biblio_general_showlivre', array('id' => $exemplaire->getLivre()->getId())));
 		}
@@ -516,7 +529,7 @@ class DefaultController extends Controller
 			$em->persist($exemplaire);
 			$em->flush();
 
-			$request->getSession()->getFlashBag()->add('notice', 'Exemplaire bien enregistré.');
+			$request->getSession()->getFlashBag()->add('success', 'Exemplaire bien enregistré.');
 
 			return $this->redirect($this->generateUrl('biblio_general_showlivre', array('id' => $exemplaire->getLivre()->getId())));
 		}
@@ -538,10 +551,17 @@ class DefaultController extends Controller
 		  throw new NotFoundHttpException("L'exemplaire d'id ".$id." n'existe pas.");
 		}
 		
-		$em->remove($exemplaire);
-		$em->flush();
+		try{
+			$em->remove($exemplaire);
+			$em->flush();
+		}catch(\Exception $e){
+			$this->get('session')->getFlashBag()->add('danger', 'Cet exemplaire possède des liens avec son emprunteur... Il ne peut pas être supprimé !');
+			return $this->redirect($this->generateUrl('biblio_general_showlivre', array('id' => $idLivre)));
+		}
 		
+		$this->get('session')->getFlashBag()->add('success', 'L\'exemplaire a bien été supprimé.');
 		return $this->redirect($this->generateUrl('biblio_general_showlivre', array('id' => $idLivre)));
+		
     }
 	
 	
@@ -564,7 +584,7 @@ class DefaultController extends Controller
 			$em->persist($edition);
 			$em->flush();
 
-			$request->getSession()->getFlashBag()->add('notice', 'Edition bien enregistré.');
+			$request->getSession()->getFlashBag()->add('success', 'Edition bien enregistré.');
 
 			return $this->redirect($this->generateUrl('biblio_general_showedition', array('id' => $edition->getId())));
 		}
@@ -594,7 +614,7 @@ class DefaultController extends Controller
 			$em->persist($edition);
 			$em->flush();
 
-			$request->getSession()->getFlashBag()->add('notice', 'Edition bien enregistré.');
+			$request->getSession()->getFlashBag()->add('success', 'Edition bien enregistré.');
 
 			return $this->redirect($this->generateUrl('biblio_general_showedition', array('id' => $edition->getId())));
 		}
@@ -616,10 +636,18 @@ class DefaultController extends Controller
 		  throw new NotFoundHttpException("L'édition d'id ".$id." n'existe pas.");
 		}
 		
-		$em->remove($edition);
-		$em->flush();
+		try{
+			$em->remove($edition);
+			$em->flush();
+		}catch(\Exception $e){
+			$this->get('session')->getFlashBag()->add('danger', 'Cette édition possède des liens avec des livres... Elle ne peut pas être supprimée !');
+			return $this->redirect($this->generateUrl('biblio_general_showeditions'));
+		}
 		
+		$this->get('session')->getFlashBag()->add('success', 'L\'éditeur a bien été supprimé.');
 		return $this->redirect($this->generateUrl('biblio_general_showeditions'));
+		
+		
     }
 	
 	public function showeditionsAction()
@@ -711,7 +739,7 @@ class DefaultController extends Controller
 			$em->persist($emprunt);
 			$em->flush();
 
-			$request->getSession()->getFlashBag()->add('notice', 'Emprunt bien enregistré.');
+			$request->getSession()->getFlashBag()->add('success', 'Emprunt bien enregistré.');
 
 			return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $emprunt->getInscrit()->getId())));
 		}
@@ -737,6 +765,7 @@ class DefaultController extends Controller
 		$em->remove($emprunt);
 		$em->flush();
 		
+		$this->get('session')->getFlashBag()->add('success', 'L\'emprunt a bien été supprimé.');
 		return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $idUser)));
     }
 	
@@ -771,7 +800,7 @@ class DefaultController extends Controller
 			$em->persist($news);
 			$em->flush();
 
-			$request->getSession()->getFlashBag()->add('notice', 'News bien enregistrée.');
+			$request->getSession()->getFlashBag()->add('success', 'News bien enregistrée.');
 
 			return $this->redirect($this->generateUrl('biblio_general_homepage'));
 		}
@@ -818,7 +847,7 @@ class DefaultController extends Controller
 			$m->persist($msg);
 			$m->flush();
 
-			$request->getSession()->getFlashBag()->add('notice', 'Message bien envoyé.');
+			$request->getSession()->getFlashBag()->add('success', 'Message bien envoyé.');
 
 			return $this->redirect($this->generateUrl('biblio_general_contact'));
 		}
@@ -879,6 +908,7 @@ class DefaultController extends Controller
 		$m->remove($message);
 		$m->flush();
 		
+		$this->get('session')->getFlashBag()->add('success', 'Le message a bien été supprimé.');
 		return $this->redirect($this->generateUrl('biblio_general_messagecontact'));
     }
 
