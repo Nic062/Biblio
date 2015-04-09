@@ -1,5 +1,7 @@
 {% trans_default_domain 'FOSUserBundle' %}
 {% block body %}
+<script src="{{ asset('js/genpass.js') }}"></script>
+
 <br />
 {% if form_errors(form.email) or form_errors(form.plainPassword.first)  %}
 <div class="alert alert-danger" role="alert">
@@ -72,10 +74,11 @@
 			</div>
 		</div>
 		
-		<div class="form-group">
+		<div class="form-group form-inline">
 			{{ form_label(form.plainPassword.first, "Mot de passe", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
 			<div class="col-sm-4">
 				{{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+				<a class="btn btn-primary" id="generatePassword" role="button" title="Le mot de passe sera envoyé par mail">Generer un password</a>
 			</div>
 		</div>
 		
