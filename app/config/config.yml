@@ -103,3 +103,4 @@ genemu_form:
         theme:   modern
         configs:
             language: fr_FR
+    autocomplete: ~

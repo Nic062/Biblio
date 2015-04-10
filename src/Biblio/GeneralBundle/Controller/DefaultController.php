@@ -326,10 +326,12 @@ class DefaultController extends Controller
 			
 			->add('searchisbn',      'button')
 			->add('titre',     'text')
-			->add('auteurs', 'entity', array(
-			  'class'    => 'BiblioGeneralBundle:Auteur',
-			  'property' => 'nom',
-			  'multiple' => true
+			
+			 ->add('auteurs', 'genemu_jqueryautocomplete_text', array(
+            'suggestions' => array(
+                'Ozil',
+                'Van Persie'
+            ),
 			))
 			->add('annee',   'choice', array(
 				'label' => 'annee',

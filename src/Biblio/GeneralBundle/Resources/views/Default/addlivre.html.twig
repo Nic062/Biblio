@@ -1,7 +1,27 @@
 {% extends '::base.html.twig' %}
 {% block title %}Ajouter un livre{% endblock %}
 {% block body %}
+ {% block stylesheet %}
+    {% if form is defined %}
+      {{ form_stylesheet(form) }}
+    {% endif %}
+  {% endblock %}
+  {% block scripts %}
+    {% if form is defined %}
+				<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+		<script src="{{ asset('js/jquery-ui/jquery-ui2.js') }}"></script>
+
+	  <script type="text/javascript">
+        tinymce.init({
+            language : 'fr_FR',
+        });
+    </script>
+      {{ form_javascript(form) }}
+    {% endif %}
+  {% endblock %}
 <script src="{{ asset('js/isbn.js') }}"></script>
+
 
 <h3>Nouveau livre : </h3>
 
