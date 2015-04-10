@@ -51,11 +51,9 @@
 
 <h2>Espace actualité :</h2>
 {% for new in news %}
-  <div class="text-center">
     <h3>{{ new.titre }}<small> par {{ new.auteur.username }} le {{ new.datePubli|date('d/m/y') }}</small></h3>
-    <p class="text-center">{{ new.contenu }}</p>
+    <p class="text-center">{{ new.contenu | raw }}</p>
     <HR width=50%>
-  </div>
 {% endfor %}
 
 {% endblock %}

@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Biblio\GeneralBundle\BiblioGeneralBundle(),
             new Biblio\UserBundle\BiblioUserBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+			new Genemu\Bundle\FormBundle\GenemuFormBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

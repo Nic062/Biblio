@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 {% block title %}Contact{% endblock %}
 {% block body %}
-
+{{ form_javascript(form) }}
 
 <h3>Contactez-nous</h3>
 
@@ -51,10 +51,15 @@
 					{{ form_widget(form.message, {'attr': {'class': 'form-control','placeholder':'Message'}}) }}
 				</div>
 			</div>
-
-
+			
+			{{ form_label(form.captcha, "Captcha", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+			<div class="form-group">
+				<div class="col-sm-10">
+					{{ form_widget(form.captcha, {'attr': {'class': 'form-control','placeholder':'Captcha'}}) }}
+				</div>
+			</div>
 			{{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}, 'label': 'Envoyer'}) }}
-			{{ form_rest(form) }}
+			
 	  	{{ form_end(form) }}
 	</div>
 </div>

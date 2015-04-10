@@ -94,3 +94,12 @@ fos_user:
                 address:        resetting@acmedemo.com
                 sender_name:    Mot de passe oublié : Bibliothèque
             template: BiblioGeneralBundle:Default:resetting.email.twig
+genemu_form:
+    recaptcha:
+        public_key: 6Le3HgUTAAAAAEoE3P7dKbkIth5SFZeND5kfwgE1
+        private_key: 6Le3HgUTAAAAAM-v5gts_2mYpU_ZNYD1JORl5vkj
+    tinymce:
+        enabled: true
+        theme:   modern
+        configs:
+            language: fr_FR

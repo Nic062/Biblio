@@ -8,6 +8,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ asset('js/jquery-ui/jquery-ui.min.css') }}">
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
@@ -18,7 +19,9 @@
         </div>
         {% block javascripts %}
         <script src="{{ asset('js/jquery-2.1.3.min.js') }}"></script>
+		<script src="{{ asset('js/jquery-ui/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+      <script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
 
          <script src="{{ asset('js/recherche.js') }}"></script>
         {% endblock %}

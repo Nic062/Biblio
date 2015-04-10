@@ -758,7 +758,8 @@ class DefaultController extends Controller
 
 		$form = $this->get('form.factory')->createBuilder('form', $news)
 			->add('titre', 'text')
-			->add('contenu', 'textarea')
+			
+			->add('contenu', 'genemu_tinymce')
 			->add('save', 'submit')
 			->getForm();
 
@@ -806,7 +807,7 @@ class DefaultController extends Controller
 			->add('prenom',     'text')
 			->add('email',     'text')
 			->add('message',     'textarea')
-
+			->add('captcha', 'genemu_recaptcha',array('mapped'=>false))
 			->add('save',      'submit')
 			->getForm();
 		
@@ -901,53 +902,13 @@ class DefaultController extends Controller
 		
 		return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $user->getId())));
     }
-	
-	public function setadminuserAction($id)
-    {
-		
-		$em = $this->getDoctrine()->getManager();
-		$user = $em->getRepository('BiblioUserBundle:User')->find($id);
-		
-		$user->addRole("ROLE_ADMIN");
-		$em->persist($user);
-		$em->flush();
-		
-		return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $user->getId())));
-    }
-	
-	public function setbanuserAction($id)
-    {
-		
-		$em = $this->getDoctrine()->getManager();
-		$user = $em->getRepository('BiblioUserBundle:User')->find($id);
-		
-		$user->addRole("ROLE_BAN");
-		$em->persist($user);
-		$em->flush();
-		
-		return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $user->getId())));
-    }
-	
-	public function setuserAction($id)
-    {
-		
-		$em = $this->getDoctrine()->getManager();
-		$user = $em->getRepository('BiblioUserBundle:User')->find($id);
-		
-		$user->addRole("ROLE_USER");
-		$em->persist($user);
-		$em->flush();
-		
-		return $this->redirect($this->generateUrl('biblio_general_showuser', array('id' => $user->getId())));
-    }
 
     public function rappelAction() {
     	$em = $this->getDoctrine()->getManager();
     	$listeEmprunts = $em->getRepository('BiblioGeneralBundle:Emprunt')->findAll();
 
     	foreach ($listeEmprunts as $emprunt) {
-    		$joursRestant = ($emprunt->getDelais() - date_diff(new \DateTime("now"), $emprunt->getDate())->d);
-    		if($joursRestant <= 0 && $joursRestant >- 10) {
+    		if(($emprunt->getDelais() - date_diff(new \DateTime("now"), $emprunt->getDate())->d) <= 0) {
     			$livre = $emprunt->getExemplaire()->getLivre();
     			$user = $emprunt->getInscrit();
 
@@ -956,26 +917,6 @@ class DefaultController extends Controller
 			        ->setFrom('iut.bibliotheque@gmail.com')
 			        ->setTo($emprunt->getInscrit()->getEmail())
 			        ->setBody($this->renderView('BiblioGeneralBundle:Default:mail.txt.twig', array(
-			        	'livre' => $livre,
-			        	'user' => $user,
-			        	'emprunt' => $emprunt
-			        )))
-			    ;
-			    $this->get('mailer')->send($message);
-    		}
-
-    		if($joursRestant <= -10) {
-    			$livre = $emprunt->getExemplaire()->getLivre();
-    			$user = $em->getRepository('BiblioUserBundle:User')->find($emprunt->getInscrit()->getId());
-    			$user->addRole("ROLE_BAN");
-    			$em->persist($user);
-    			$em->flush();
-
-    			$message = \Swift_Message::newInstance()
-			        ->setSubject('Suspension de votre abonnement')
-			        ->setFrom('iut.bibliotheque@gmail.com')
-			        ->setTo($emprunt->getInscrit()->getEmail())
-			        ->setBody($this->renderView('BiblioGeneralBundle:Default:mailSuspension.txt.twig', array(
 			        	'livre' => $livre,
 			        	'user' => $user,
 			        	'emprunt' => $emprunt
