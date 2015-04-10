@@ -51,7 +51,7 @@
 	
 </div>
 
-{% if is_granted("ROLE_ADMIN")  %}
+{% if is_granted("ROLE_ADMIN") and app.user.id!=member.id  %}
 	<center style="margin:10px;"><a href="{{ path('biblio_general_setabonnementuser',{ 'id':member.id }) }}"><button class="btn btn-primary">Ce membre a payé ? Il peut devenir abonné !</button></a></center>
 	<center style="margin:10px;"><a href="{{ path('biblio_general_setadminuser',{ 'id':member.id }) }}"><button class="btn btn-primary">Ou mieux, il peut devenir administrateur !</button></a></center>
 	<center style="margin:10px;"><a href="{{ path('biblio_general_setuser',{ 'id':member.id }) }}"><button class="btn btn-primary">Ou moins bien, redevenir membre...</button></a></center>
